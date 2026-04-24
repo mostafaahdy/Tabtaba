@@ -6,10 +6,9 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Tabtba.Persistence.Data.DbContexts;
 
-
 #nullable disable
 
-namespace Tbtba.Infrastructure.Migrations
+namespace Tabtaba.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -23,7 +22,140 @@ namespace Tbtba.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("tbtba.Entites.Achievement", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasDatabaseName("RoleNameIndex")
+                        .HasFilter("[NormalizedName] IS NOT NULL");
+
+                    b.ToTable("AspNetRoles", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("RoleId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetRoleClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ClaimType")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ClaimValue")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProviderKey")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ProviderDisplayName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("LoginProvider", "ProviderKey");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AspNetUserLogins", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("RoleId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("UserId", "RoleId");
+
+                    b.HasIndex("RoleId");
+
+                    b.ToTable("AspNetUserRoles", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("LoginProvider")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("UserId", "LoginProvider", "Name");
+
+                    b.ToTable("AspNetUserTokens", (string)null);
+                });
+
+            modelBuilder.Entity("Tabtaba.Entites.Achievement", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -56,7 +188,7 @@ namespace Tbtba.Infrastructure.Migrations
                     b.ToTable("Achievements");
                 });
 
-            modelBuilder.Entity("tbtba.Entites.Appointment", b =>
+            modelBuilder.Entity("Tabtaba.Entites.Appointment", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -97,7 +229,7 @@ namespace Tbtba.Infrastructure.Migrations
                     b.ToTable("Appointments");
                 });
 
-            modelBuilder.Entity("tbtba.Entites.CommonCondition", b =>
+            modelBuilder.Entity("Tabtaba.Entites.CommonCondition", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -118,7 +250,7 @@ namespace Tbtba.Infrastructure.Migrations
                     b.ToTable("CommonConditions");
                 });
 
-            modelBuilder.Entity("tbtba.Entites.CommonConditions_Diagnosis", b =>
+            modelBuilder.Entity("Tabtaba.Entites.CommonConditions_Diagnosis", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -149,7 +281,7 @@ namespace Tbtba.Infrastructure.Migrations
                     b.ToTable("CommonConditions_Diagnoses");
                 });
 
-            modelBuilder.Entity("tbtba.Entites.Condition", b =>
+            modelBuilder.Entity("Tabtaba.Entites.Condition", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -170,7 +302,7 @@ namespace Tbtba.Infrastructure.Migrations
                     b.ToTable("Conditions");
                 });
 
-            modelBuilder.Entity("tbtba.Entites.DailyMessages", b =>
+            modelBuilder.Entity("Tabtaba.Entites.DailyMessages", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -189,8 +321,9 @@ namespace Tbtba.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
@@ -199,7 +332,7 @@ namespace Tbtba.Infrastructure.Migrations
                     b.ToTable("DailyMessages");
                 });
 
-            modelBuilder.Entity("tbtba.Entites.Diagnosis", b =>
+            modelBuilder.Entity("Tabtaba.Entites.Diagnosis", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -237,7 +370,7 @@ namespace Tbtba.Infrastructure.Migrations
                     b.ToTable("Diagnoses");
                 });
 
-            modelBuilder.Entity("tbtba.Entites.Doctors", b =>
+            modelBuilder.Entity("Tabtaba.Entites.Doctor", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -260,8 +393,9 @@ namespace Tbtba.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Years_Experience")
                         .HasColumnType("int");
@@ -271,7 +405,7 @@ namespace Tbtba.Infrastructure.Migrations
                     b.ToTable("Doctors");
                 });
 
-            modelBuilder.Entity("tbtba.Entites.Journal", b =>
+            modelBuilder.Entity("Tabtaba.Entites.Journal", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -300,7 +434,7 @@ namespace Tbtba.Infrastructure.Migrations
                     b.ToTable("Journals");
                 });
 
-            modelBuilder.Entity("tbtba.Entites.KidsZone", b =>
+            modelBuilder.Entity("Tabtaba.Entites.KidsZone", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -324,8 +458,9 @@ namespace Tbtba.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
@@ -334,7 +469,7 @@ namespace Tbtba.Infrastructure.Migrations
                     b.ToTable("KidsZones");
                 });
 
-            modelBuilder.Entity("tbtba.Entites.KnowledgeZone", b =>
+            modelBuilder.Entity("Tabtaba.Entites.KnowledgeZone", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -354,17 +489,18 @@ namespace Tbtba.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserID")
-                        .HasColumnType("int");
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserID");
+                    b.HasIndex("UserId");
 
                     b.ToTable("KnowledgeZones");
                 });
 
-            modelBuilder.Entity("tbtba.Entites.MedicalRecord", b =>
+            modelBuilder.Entity("Tabtaba.Entites.MedicalRecord", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -389,7 +525,7 @@ namespace Tbtba.Infrastructure.Migrations
                     b.ToTable("MedicalRecords");
                 });
 
-            modelBuilder.Entity("tbtba.Entites.Patient", b =>
+            modelBuilder.Entity("Tabtaba.Entites.Patient", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -412,8 +548,9 @@ namespace Tbtba.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
@@ -423,7 +560,7 @@ namespace Tbtba.Infrastructure.Migrations
                     b.ToTable("Patients");
                 });
 
-            modelBuilder.Entity("tbtba.Entites.Patient_Appointment_Doctor", b =>
+            modelBuilder.Entity("Tabtaba.Entites.Patient_Appointment_Doctor", b =>
                 {
                     b.Property<int>("PatientId")
                         .HasColumnType("int");
@@ -446,7 +583,7 @@ namespace Tbtba.Infrastructure.Migrations
                     b.ToTable("Patient_Appointment_Doctors");
                 });
 
-            modelBuilder.Entity("tbtba.Entites.ProgressTracker", b =>
+            modelBuilder.Entity("Tabtaba.Entites.ProgressTracker", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -476,7 +613,7 @@ namespace Tbtba.Infrastructure.Migrations
                     b.ToTable("ProgressTrackers");
                 });
 
-            modelBuilder.Entity("tbtba.Entites.Review", b =>
+            modelBuilder.Entity("Tabtaba.Entites.Review", b =>
                 {
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd()
@@ -506,20 +643,28 @@ namespace Tbtba.Infrastructure.Migrations
                     b.ToTable("Reviews");
                 });
 
-            modelBuilder.Entity("tbtba.Entites.User", b =>
+            modelBuilder.Entity("Tabtaba.Entites.User", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("DoctorId")
                         .HasColumnType("int");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
 
                     b.Property<string>("F_Name")
                         .IsRequired()
@@ -537,9 +682,42 @@ namespace Tbtba.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Phone")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("User_Type")
                         .IsRequired()
@@ -550,18 +728,77 @@ namespace Tbtba.Infrastructure.Migrations
                     b.HasIndex("DoctorId")
                         .IsUnique();
 
-                    b.ToTable("Users");
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("tbtba.Entites.Achievement", b =>
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
-                    b.HasOne("tbtba.Entites.Patient", null)
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
+                {
+                    b.HasOne("Tabtaba.Entites.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
+                {
+                    b.HasOne("Tabtaba.Entites.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                        .WithMany()
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Tabtaba.Entites.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
+                {
+                    b.HasOne("Tabtaba.Entites.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Tabtaba.Entites.Achievement", b =>
+                {
+                    b.HasOne("Tabtaba.Entites.Patient", null)
                         .WithMany()
                         .HasForeignKey("PatientId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("tbtba.Entites.Patient", "Patient")
+                    b.HasOne("Tabtaba.Entites.Patient", "Patient")
                         .WithMany("Achievements")
                         .HasForeignKey("PatientId1")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -570,15 +807,15 @@ namespace Tbtba.Infrastructure.Migrations
                     b.Navigation("Patient");
                 });
 
-            modelBuilder.Entity("tbtba.Entites.Appointment", b =>
+            modelBuilder.Entity("Tabtaba.Entites.Appointment", b =>
                 {
-                    b.HasOne("tbtba.Entites.Doctors", "Doctor")
+                    b.HasOne("Tabtaba.Entites.Doctor", "Doctor")
                         .WithMany("Appointments")
                         .HasForeignKey("DoctorId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("tbtba.Entites.Patient", "Patient")
+                    b.HasOne("Tabtaba.Entites.Patient", "Patient")
                         .WithMany("Appointments")
                         .HasForeignKey("PatientId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -589,19 +826,19 @@ namespace Tbtba.Infrastructure.Migrations
                     b.Navigation("Patient");
                 });
 
-            modelBuilder.Entity("tbtba.Entites.CommonConditions_Diagnosis", b =>
+            modelBuilder.Entity("Tabtaba.Entites.CommonConditions_Diagnosis", b =>
                 {
-                    b.HasOne("tbtba.Entites.CommonCondition", "CommonCondition")
+                    b.HasOne("Tabtaba.Entites.CommonCondition", "CommonCondition")
                         .WithMany("CommonConditions_Diagnoses")
                         .HasForeignKey("CommonConditionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("tbtba.Entites.Condition", null)
+                    b.HasOne("Tabtaba.Entites.Condition", null)
                         .WithMany("CommonConditions_Diagnoses")
                         .HasForeignKey("ConditionId");
 
-                    b.HasOne("tbtba.Entites.Diagnosis", "Diagnosis")
+                    b.HasOne("Tabtaba.Entites.Diagnosis", "Diagnosis")
                         .WithMany()
                         .HasForeignKey("DiagnosisId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -612,9 +849,9 @@ namespace Tbtba.Infrastructure.Migrations
                     b.Navigation("Diagnosis");
                 });
 
-            modelBuilder.Entity("tbtba.Entites.DailyMessages", b =>
+            modelBuilder.Entity("Tabtaba.Entites.DailyMessages", b =>
                 {
-                    b.HasOne("tbtba.Entites.User", "User")
+                    b.HasOne("Tabtaba.Entites.User", "User")
                         .WithMany("DailyMessages")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -623,21 +860,21 @@ namespace Tbtba.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("tbtba.Entites.Diagnosis", b =>
+            modelBuilder.Entity("Tabtaba.Entites.Diagnosis", b =>
                 {
-                    b.HasOne("tbtba.Entites.Condition", "Condition")
+                    b.HasOne("Tabtaba.Entites.Condition", "Condition")
                         .WithMany("Diagnoses")
                         .HasForeignKey("ConditionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("tbtba.Entites.Doctors", "Doctor")
+                    b.HasOne("Tabtaba.Entites.Doctor", "Doctor")
                         .WithMany("Diagnoses")
                         .HasForeignKey("DoctorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("tbtba.Entites.MedicalRecord", "MedicalRecord")
+                    b.HasOne("Tabtaba.Entites.MedicalRecord", "MedicalRecord")
                         .WithMany("Diagnoses")
                         .HasForeignKey("MedicalRecordId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -650,9 +887,9 @@ namespace Tbtba.Infrastructure.Migrations
                     b.Navigation("MedicalRecord");
                 });
 
-            modelBuilder.Entity("tbtba.Entites.Journal", b =>
+            modelBuilder.Entity("Tabtaba.Entites.Journal", b =>
                 {
-                    b.HasOne("tbtba.Entites.Patient", "Patient")
+                    b.HasOne("Tabtaba.Entites.Patient", "Patient")
                         .WithMany("Journals")
                         .HasForeignKey("PatientId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -661,9 +898,9 @@ namespace Tbtba.Infrastructure.Migrations
                     b.Navigation("Patient");
                 });
 
-            modelBuilder.Entity("tbtba.Entites.KidsZone", b =>
+            modelBuilder.Entity("Tabtaba.Entites.KidsZone", b =>
                 {
-                    b.HasOne("tbtba.Entites.User", "User")
+                    b.HasOne("Tabtaba.Entites.User", "User")
                         .WithMany("KidsZones")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -672,54 +909,54 @@ namespace Tbtba.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("tbtba.Entites.KnowledgeZone", b =>
+            modelBuilder.Entity("Tabtaba.Entites.KnowledgeZone", b =>
                 {
-                    b.HasOne("tbtba.Entites.User", "User")
+                    b.HasOne("Tabtaba.Entites.User", "User")
                         .WithMany("KnowledgeZones")
-                        .HasForeignKey("UserID")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("tbtba.Entites.MedicalRecord", b =>
+            modelBuilder.Entity("Tabtaba.Entites.MedicalRecord", b =>
                 {
-                    b.HasOne("tbtba.Entites.Patient", "Patient")
+                    b.HasOne("Tabtaba.Entites.Patient", "Patient")
                         .WithOne("MedicalRecord")
-                        .HasForeignKey("tbtba.Entites.MedicalRecord", "PatientId")
+                        .HasForeignKey("Tabtaba.Entites.MedicalRecord", "PatientId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Patient");
                 });
 
-            modelBuilder.Entity("tbtba.Entites.Patient", b =>
+            modelBuilder.Entity("Tabtaba.Entites.Patient", b =>
                 {
-                    b.HasOne("tbtba.Entites.User", "User")
+                    b.HasOne("Tabtaba.Entites.User", "User")
                         .WithOne("Patient")
-                        .HasForeignKey("tbtba.Entites.Patient", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .HasForeignKey("Tabtaba.Entites.Patient", "UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("tbtba.Entites.Patient_Appointment_Doctor", b =>
+            modelBuilder.Entity("Tabtaba.Entites.Patient_Appointment_Doctor", b =>
                 {
-                    b.HasOne("tbtba.Entites.Appointment", "Appointment")
+                    b.HasOne("Tabtaba.Entites.Appointment", "Appointment")
                         .WithMany()
                         .HasForeignKey("AppointmentId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("tbtba.Entites.Doctors", "Doctor")
+                    b.HasOne("Tabtaba.Entites.Doctor", "Doctor")
                         .WithMany()
                         .HasForeignKey("DoctorId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("tbtba.Entites.Patient", "Patient")
+                    b.HasOne("Tabtaba.Entites.Patient", "Patient")
                         .WithMany()
                         .HasForeignKey("PatientId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -732,9 +969,9 @@ namespace Tbtba.Infrastructure.Migrations
                     b.Navigation("Patient");
                 });
 
-            modelBuilder.Entity("tbtba.Entites.ProgressTracker", b =>
+            modelBuilder.Entity("Tabtaba.Entites.ProgressTracker", b =>
                 {
-                    b.HasOne("tbtba.Entites.Patient", "Patient")
+                    b.HasOne("Tabtaba.Entites.Patient", "Patient")
                         .WithMany("ProgressTrackers")
                         .HasForeignKey("PatientId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -743,15 +980,15 @@ namespace Tbtba.Infrastructure.Migrations
                     b.Navigation("Patient");
                 });
 
-            modelBuilder.Entity("tbtba.Entites.Review", b =>
+            modelBuilder.Entity("Tabtaba.Entites.Review", b =>
                 {
-                    b.HasOne("tbtba.Entites.Doctors", "Doctor")
+                    b.HasOne("Tabtaba.Entites.Doctor", "Doctor")
                         .WithMany("Reviews")
                         .HasForeignKey("DoctorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("tbtba.Entites.Patient", "Patient")
+                    b.HasOne("Tabtaba.Entites.Patient", "Patient")
                         .WithMany("Reviews")
                         .HasForeignKey("PatientId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -762,30 +999,30 @@ namespace Tbtba.Infrastructure.Migrations
                     b.Navigation("Patient");
                 });
 
-            modelBuilder.Entity("tbtba.Entites.User", b =>
+            modelBuilder.Entity("Tabtaba.Entites.User", b =>
                 {
-                    b.HasOne("tbtba.Entites.Doctors", "Doctor")
+                    b.HasOne("Tabtaba.Entites.Doctor", "Doctor")
                         .WithOne("User")
-                        .HasForeignKey("tbtba.Entites.User", "DoctorId")
+                        .HasForeignKey("Tabtaba.Entites.User", "DoctorId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Doctor");
                 });
 
-            modelBuilder.Entity("tbtba.Entites.CommonCondition", b =>
+            modelBuilder.Entity("Tabtaba.Entites.CommonCondition", b =>
                 {
                     b.Navigation("CommonConditions_Diagnoses");
                 });
 
-            modelBuilder.Entity("tbtba.Entites.Condition", b =>
+            modelBuilder.Entity("Tabtaba.Entites.Condition", b =>
                 {
                     b.Navigation("CommonConditions_Diagnoses");
 
                     b.Navigation("Diagnoses");
                 });
 
-            modelBuilder.Entity("tbtba.Entites.Doctors", b =>
+            modelBuilder.Entity("Tabtaba.Entites.Doctor", b =>
                 {
                     b.Navigation("Appointments");
 
@@ -797,12 +1034,12 @@ namespace Tbtba.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("tbtba.Entites.MedicalRecord", b =>
+            modelBuilder.Entity("Tabtaba.Entites.MedicalRecord", b =>
                 {
                     b.Navigation("Diagnoses");
                 });
 
-            modelBuilder.Entity("tbtba.Entites.Patient", b =>
+            modelBuilder.Entity("Tabtaba.Entites.Patient", b =>
                 {
                     b.Navigation("Achievements");
 
@@ -818,7 +1055,7 @@ namespace Tbtba.Infrastructure.Migrations
                     b.Navigation("Reviews");
                 });
 
-            modelBuilder.Entity("tbtba.Entites.User", b =>
+            modelBuilder.Entity("Tabtaba.Entites.User", b =>
                 {
                     b.Navigation("DailyMessages");
 

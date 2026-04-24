@@ -9,13 +9,13 @@ namespace Tabtaba.Entites
     public class DailyMessages
     {
         public int Id { get; set; } 
-        public string Message_Text { get; set; }
-        public string Category { get; set; } 
+        public string Message_Text { get; set; } = default!;
+        public string Category { get; set; } = default!;
         public DateTime? Date_Shown { get; set; } 
 
       
-        public int UserId { get; set; }
-        public virtual User User { get; set; } 
+        public string UserId { get; set; } = default!;
+        public virtual User User { get; set; } = default!;
     }
 }
 

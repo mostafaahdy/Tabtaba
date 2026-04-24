@@ -16,6 +16,6 @@ namespace Tabtaba.Entites
 
        
         public int PatientId { get; set; } 
-        public virtual Patient Patient { get; set; }
+        public virtual Patient Patient { get; set; } = default!;
     }
 }
