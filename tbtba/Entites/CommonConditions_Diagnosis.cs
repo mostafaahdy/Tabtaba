@@ -11,8 +11,8 @@ namespace Tabtaba.Entites
         public int Id { get; set; } 
         public int CommonCondition_ID { get; set; } 
 
-        public virtual Diagnosis Diagnosis { get; set; }
-        public virtual CommonCondition CommonCondition { get; set; }
+        public virtual Diagnosis Diagnosis { get; set; } = default!;
+        public virtual CommonCondition CommonCondition { get; set; } = default!;
 
 
     }

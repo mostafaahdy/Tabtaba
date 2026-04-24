@@ -1,4 +1,6 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Tabtaba.Entites;
 using Tabtba.Persistence.Data.DbContexts;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +15,11 @@ builder.Services.AddOpenApi();
 builder.Services.AddDbContext<ApplicationDbContext>(options => {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+builder.Services.AddIdentity<User,IdentityRole>(options => {
+    options.Tokens.PasswordResetTokenProvider = TokenOptions.DefaultEmailProvider;
+})
+.AddEntityFrameworkStores<ApplicationDbContext>()
+.AddDefaultTokenProviders();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

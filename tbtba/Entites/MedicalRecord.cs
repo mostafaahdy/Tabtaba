@@ -14,9 +14,9 @@ namespace Tabtaba.Entites
 
        
         public int PatientId { get; set; } 
-        public virtual Patient Patient { get; set; } 
+        public virtual Patient Patient { get; set; } = default!;
 
-        
-        public virtual ICollection<Diagnosis> Diagnoses { get; set; }
+
+        public virtual ICollection<Diagnosis> Diagnoses { get; set; } = [];
     }
 }

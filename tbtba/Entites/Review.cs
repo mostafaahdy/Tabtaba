@@ -11,14 +11,14 @@ namespace Tabtaba.Entites
     {
         public int id { get; set; } 
         public decimal Rating_Score { get; set; }
-        public string Review_Text { get; set; }
+        public string Review_Text { get; set; } = default!;
 
-       
+
         public int PatientId { get; set; } 
         public int DoctorId{ get; set; } 
 
        
-        public virtual Patient Patient { get; set; }
-        public virtual Doctors Doctor { get; set; }
+        public virtual Patient Patient { get; set; } = default!;
+        public virtual Doctor Doctor { get; set; } = default!;
     }
 }
