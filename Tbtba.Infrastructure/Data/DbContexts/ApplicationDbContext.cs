@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Tabtaba.Entites;
+using Tabtaba.Entities;
 using Tabtaba.Persistence.Data.Configurations;
 
 
@@ -13,14 +13,12 @@ namespace Tabtba.Persistence.Data.DbContexts
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-           
+       
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppointmentConfig).Assembly);
 
-        }  
-           
-
-              #region Db Sets
+        }
+              #region DbSets
 
         public DbSet<Achievement> Achievements { get; set; }
         public DbSet<Appointment> Appointments { get; set; }

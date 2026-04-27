@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Tabtaba.Entites;
+using Tabtaba.Entities;
 using Tabtba.Persistence.Data.DbContexts;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,16 +22,19 @@ builder.Services.AddIdentity<User,IdentityRole>(options => {
 .AddDefaultTokenProviders();
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+#region Configure the HTTP request pipeline
+
+if( app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
 
 app.UseHttpsRedirection();
-
+app.UseStaticFiles();
 app.UseAuthorization();
 
 app.MapControllers();
+
+#endregion 
 
 app.Run();

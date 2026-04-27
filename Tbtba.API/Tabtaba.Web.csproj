@@ -16,11 +16,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Tabtab.Presentation\Tabtaba.Presentation.csproj" />
+    <ProjectReference Include="..\Tabtaba.ServicesAbstraction\Tabtaba.ServicesAbstraction.csproj" />
+    <ProjectReference Include="..\Tabtaba.Services\Tabtaba.Services.csproj" />
+    <ProjectReference Include="..\Tabtba.Shared\Tabtaba.Shared.csproj" />
     <ProjectReference Include="..\Tbtba.Infrastructure\Tabtaba.Persistence.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Controllers\" />
+    <ProjectReference Include="..\tbtba\Tabtaba.Domain.csproj" />
   </ItemGroup>
 
 </Project>

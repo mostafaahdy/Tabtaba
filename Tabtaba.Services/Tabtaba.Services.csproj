@@ -1,14 +1,19 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
-  <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Tabtaba.ServicesAbstraction\Tabtaba.ServicesAbstraction.csproj" />
-    <ProjectReference Include="..\tbtba\Tabtaba.Domain.csproj" />
-  </ItemGroup>
-
+	<PropertyGroup>
+		<TargetFramework>net9.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\Tabtaba.ServicesAbstraction\Tabtaba.ServicesAbstraction.csproj" />
+		<ProjectReference Include="..\Tabtba.Shared\Tabtaba.Shared.csproj" />
+		<ProjectReference Include="..\tbtba\Tabtaba.Domain.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+		<Folder Include="Features\AuthenticationServices\Commands\" />
+		<Folder Include="Features\MappingProfiles\" />
+	</ItemGroup>
 </Project>
