@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 
 
-namespace Tabtaba.Entites
+namespace Tabtaba.Entities
 {
     public class Patient_Appointment_Doctor
     {

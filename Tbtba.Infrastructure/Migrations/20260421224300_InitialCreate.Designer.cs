@@ -158,7 +158,7 @@ namespace Tabtaba.Persistence.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Tabtaba.Entites.Achievement", b =>
+            modelBuilder.Entity("Tabtaba.Entities.Achievement", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -191,7 +191,7 @@ namespace Tabtaba.Persistence.Migrations
                     b.ToTable("Achievements");
                 });
 
-            modelBuilder.Entity("Tabtaba.Entites.Appointment", b =>
+            modelBuilder.Entity("Tabtaba.Entities.Appointment", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -232,7 +232,7 @@ namespace Tabtaba.Persistence.Migrations
                     b.ToTable("Appointments");
                 });
 
-            modelBuilder.Entity("Tabtaba.Entites.CommonCondition", b =>
+            modelBuilder.Entity("Tabtaba.Entities.CommonCondition", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -253,7 +253,7 @@ namespace Tabtaba.Persistence.Migrations
                     b.ToTable("CommonConditions");
                 });
 
-            modelBuilder.Entity("Tabtaba.Entites.CommonConditions_Diagnosis", b =>
+            modelBuilder.Entity("Tabtaba.Entities.CommonConditions_Diagnosis", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -284,7 +284,7 @@ namespace Tabtaba.Persistence.Migrations
                     b.ToTable("CommonConditions_Diagnoses");
                 });
 
-            modelBuilder.Entity("Tabtaba.Entites.Condition", b =>
+            modelBuilder.Entity("Tabtaba.Entities.Condition", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -305,7 +305,7 @@ namespace Tabtaba.Persistence.Migrations
                     b.ToTable("Conditions");
                 });
 
-            modelBuilder.Entity("Tabtaba.Entites.DailyMessages", b =>
+            modelBuilder.Entity("Tabtaba.Entities.DailyMessages", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -335,7 +335,7 @@ namespace Tabtaba.Persistence.Migrations
                     b.ToTable("DailyMessages");
                 });
 
-            modelBuilder.Entity("Tabtaba.Entites.Diagnosis", b =>
+            modelBuilder.Entity("Tabtaba.Entities.Diagnosis", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -373,7 +373,7 @@ namespace Tabtaba.Persistence.Migrations
                     b.ToTable("Diagnoses");
                 });
 
-            modelBuilder.Entity("Tabtaba.Entites.Doctor", b =>
+            modelBuilder.Entity("Tabtaba.Entities.Doctor", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -408,7 +408,7 @@ namespace Tabtaba.Persistence.Migrations
                     b.ToTable("Doctors");
                 });
 
-            modelBuilder.Entity("Tabtaba.Entites.Journal", b =>
+            modelBuilder.Entity("Tabtaba.Entities.Journal", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -437,7 +437,7 @@ namespace Tabtaba.Persistence.Migrations
                     b.ToTable("Journals");
                 });
 
-            modelBuilder.Entity("Tabtaba.Entites.KidsZone", b =>
+            modelBuilder.Entity("Tabtaba.Entities.KidsZone", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -472,7 +472,7 @@ namespace Tabtaba.Persistence.Migrations
                     b.ToTable("KidsZones");
                 });
 
-            modelBuilder.Entity("Tabtaba.Entites.KnowledgeZone", b =>
+            modelBuilder.Entity("Tabtaba.Entities.KnowledgeZone", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -503,7 +503,7 @@ namespace Tabtaba.Persistence.Migrations
                     b.ToTable("KnowledgeZones");
                 });
 
-            modelBuilder.Entity("Tabtaba.Entites.MedicalRecord", b =>
+            modelBuilder.Entity("Tabtaba.Entities.MedicalRecord", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -528,7 +528,7 @@ namespace Tabtaba.Persistence.Migrations
                     b.ToTable("MedicalRecords");
                 });
 
-            modelBuilder.Entity("Tabtaba.Entites.Patient", b =>
+            modelBuilder.Entity("Tabtaba.Entities.Patient", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -563,7 +563,7 @@ namespace Tabtaba.Persistence.Migrations
                     b.ToTable("Patients");
                 });
 
-            modelBuilder.Entity("Tabtaba.Entites.Patient_Appointment_Doctor", b =>
+            modelBuilder.Entity("Tabtaba.Entities.Patient_Appointment_Doctor", b =>
                 {
                     b.Property<int>("PatientId")
                         .HasColumnType("int");
@@ -586,7 +586,7 @@ namespace Tabtaba.Persistence.Migrations
                     b.ToTable("Patient_Appointment_Doctors");
                 });
 
-            modelBuilder.Entity("Tabtaba.Entites.ProgressTracker", b =>
+            modelBuilder.Entity("Tabtaba.Entities.ProgressTracker", b =>
                 {
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
@@ -616,7 +616,7 @@ namespace Tabtaba.Persistence.Migrations
                     b.ToTable("ProgressTrackers");
                 });
 
-            modelBuilder.Entity("Tabtaba.Entites.Review", b =>
+            modelBuilder.Entity("Tabtaba.Entities.Review", b =>
                 {
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd()
@@ -646,7 +646,7 @@ namespace Tabtaba.Persistence.Migrations
                     b.ToTable("Reviews");
                 });
 
-            modelBuilder.Entity("Tabtaba.Entites.User", b =>
+            modelBuilder.Entity("Tabtaba.Entities.User", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -753,7 +753,7 @@ namespace Tabtaba.Persistence.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Tabtaba.Entites.User", null)
+                    b.HasOne("Tabtaba.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -762,7 +762,7 @@ namespace Tabtaba.Persistence.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Tabtaba.Entites.User", null)
+                    b.HasOne("Tabtaba.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -777,7 +777,7 @@ namespace Tabtaba.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Tabtaba.Entites.User", null)
+                    b.HasOne("Tabtaba.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -786,22 +786,22 @@ namespace Tabtaba.Persistence.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("Tabtaba.Entites.User", null)
+                    b.HasOne("Tabtaba.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Tabtaba.Entites.Achievement", b =>
+            modelBuilder.Entity("Tabtaba.Entities.Achievement", b =>
                 {
-                    b.HasOne("Tabtaba.Entites.Patient", null)
+                    b.HasOne("Tabtaba.Entities.Patient", null)
                         .WithMany()
                         .HasForeignKey("PatientId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Tabtaba.Entites.Patient", "Patient")
+                    b.HasOne("Tabtaba.Entities.Patient", "Patient")
                         .WithMany("Achievements")
                         .HasForeignKey("PatientId1")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -810,15 +810,15 @@ namespace Tabtaba.Persistence.Migrations
                     b.Navigation("Patient");
                 });
 
-            modelBuilder.Entity("Tabtaba.Entites.Appointment", b =>
+            modelBuilder.Entity("Tabtaba.Entities.Appointment", b =>
                 {
-                    b.HasOne("Tabtaba.Entites.Doctor", "Doctor")
+                    b.HasOne("Tabtaba.Entities.Doctor", "Doctor")
                         .WithMany("Appointments")
                         .HasForeignKey("DoctorId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Tabtaba.Entites.Patient", "Patient")
+                    b.HasOne("Tabtaba.Entities.Patient", "Patient")
                         .WithMany("Appointments")
                         .HasForeignKey("PatientId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -829,19 +829,19 @@ namespace Tabtaba.Persistence.Migrations
                     b.Navigation("Patient");
                 });
 
-            modelBuilder.Entity("Tabtaba.Entites.CommonConditions_Diagnosis", b =>
+            modelBuilder.Entity("Tabtaba.Entities.CommonConditions_Diagnosis", b =>
                 {
-                    b.HasOne("Tabtaba.Entites.CommonCondition", "CommonCondition")
+                    b.HasOne("Tabtaba.Entities.CommonCondition", "CommonCondition")
                         .WithMany("CommonConditions_Diagnoses")
                         .HasForeignKey("CommonConditionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Tabtaba.Entites.Condition", null)
+                    b.HasOne("Tabtaba.Entities.Condition", null)
                         .WithMany("CommonConditions_Diagnoses")
                         .HasForeignKey("ConditionId");
 
-                    b.HasOne("Tabtaba.Entites.Diagnosis", "Diagnosis")
+                    b.HasOne("Tabtaba.Entities.Diagnosis", "Diagnosis")
                         .WithMany()
                         .HasForeignKey("DiagnosisId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -852,9 +852,9 @@ namespace Tabtaba.Persistence.Migrations
                     b.Navigation("Diagnosis");
                 });
 
-            modelBuilder.Entity("Tabtaba.Entites.DailyMessages", b =>
+            modelBuilder.Entity("Tabtaba.Entities.DailyMessages", b =>
                 {
-                    b.HasOne("Tabtaba.Entites.User", "User")
+                    b.HasOne("Tabtaba.Entities.User", "User")
                         .WithMany("DailyMessages")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -863,21 +863,21 @@ namespace Tabtaba.Persistence.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Tabtaba.Entites.Diagnosis", b =>
+            modelBuilder.Entity("Tabtaba.Entities.Diagnosis", b =>
                 {
-                    b.HasOne("Tabtaba.Entites.Condition", "Condition")
+                    b.HasOne("Tabtaba.Entities.Condition", "Condition")
                         .WithMany("Diagnoses")
                         .HasForeignKey("ConditionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Tabtaba.Entites.Doctor", "Doctor")
+                    b.HasOne("Tabtaba.Entities.Doctor", "Doctor")
                         .WithMany("Diagnoses")
                         .HasForeignKey("DoctorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Tabtaba.Entites.MedicalRecord", "MedicalRecord")
+                    b.HasOne("Tabtaba.Entities.MedicalRecord", "MedicalRecord")
                         .WithMany("Diagnoses")
                         .HasForeignKey("MedicalRecordId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -890,9 +890,9 @@ namespace Tabtaba.Persistence.Migrations
                     b.Navigation("MedicalRecord");
                 });
 
-            modelBuilder.Entity("Tabtaba.Entites.Journal", b =>
+            modelBuilder.Entity("Tabtaba.Entities.Journal", b =>
                 {
-                    b.HasOne("Tabtaba.Entites.Patient", "Patient")
+                    b.HasOne("Tabtaba.Entities.Patient", "Patient")
                         .WithMany("Journals")
                         .HasForeignKey("PatientId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -901,9 +901,9 @@ namespace Tabtaba.Persistence.Migrations
                     b.Navigation("Patient");
                 });
 
-            modelBuilder.Entity("Tabtaba.Entites.KidsZone", b =>
+            modelBuilder.Entity("Tabtaba.Entities.KidsZone", b =>
                 {
-                    b.HasOne("Tabtaba.Entites.User", "User")
+                    b.HasOne("Tabtaba.Entities.User", "User")
                         .WithMany("KidsZones")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -912,9 +912,9 @@ namespace Tabtaba.Persistence.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Tabtaba.Entites.KnowledgeZone", b =>
+            modelBuilder.Entity("Tabtaba.Entities.KnowledgeZone", b =>
                 {
-                    b.HasOne("Tabtaba.Entites.User", "User")
+                    b.HasOne("Tabtaba.Entities.User", "User")
                         .WithMany("KnowledgeZones")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -923,43 +923,43 @@ namespace Tabtaba.Persistence.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Tabtaba.Entites.MedicalRecord", b =>
+            modelBuilder.Entity("Tabtaba.Entities.MedicalRecord", b =>
                 {
-                    b.HasOne("Tabtaba.Entites.Patient", "Patient")
+                    b.HasOne("Tabtaba.Entities.Patient", "Patient")
                         .WithOne("MedicalRecord")
-                        .HasForeignKey("Tabtaba.Entites.MedicalRecord", "PatientId")
+                        .HasForeignKey("Tabtaba.Entities.MedicalRecord", "PatientId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Patient");
                 });
 
-            modelBuilder.Entity("Tabtaba.Entites.Patient", b =>
+            modelBuilder.Entity("Tabtaba.Entities.Patient", b =>
                 {
-                    b.HasOne("Tabtaba.Entites.User", "User")
+                    b.HasOne("Tabtaba.Entities.User", "User")
                         .WithOne("Patient")
-                        .HasForeignKey("Tabtaba.Entites.Patient", "UserId")
+                        .HasForeignKey("Tabtaba.Entities.Patient", "UserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Tabtaba.Entites.Patient_Appointment_Doctor", b =>
+            modelBuilder.Entity("Tabtaba.Entities.Patient_Appointment_Doctor", b =>
                 {
-                    b.HasOne("Tabtaba.Entites.Appointment", "Appointment")
+                    b.HasOne("Tabtaba.Entities.Appointment", "Appointment")
                         .WithMany()
                         .HasForeignKey("AppointmentId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Tabtaba.Entites.Doctor", "Doctor")
+                    b.HasOne("Tabtaba.Entities.Doctor", "Doctor")
                         .WithMany()
                         .HasForeignKey("DoctorId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("Tabtaba.Entites.Patient", "Patient")
+                    b.HasOne("Tabtaba.Entities.Patient", "Patient")
                         .WithMany()
                         .HasForeignKey("PatientId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -972,9 +972,9 @@ namespace Tabtaba.Persistence.Migrations
                     b.Navigation("Patient");
                 });
 
-            modelBuilder.Entity("Tabtaba.Entites.ProgressTracker", b =>
+            modelBuilder.Entity("Tabtaba.Entities.ProgressTracker", b =>
                 {
-                    b.HasOne("Tabtaba.Entites.Patient", "Patient")
+                    b.HasOne("Tabtaba.Entities.Patient", "Patient")
                         .WithMany("ProgressTrackers")
                         .HasForeignKey("PatientId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -983,15 +983,15 @@ namespace Tabtaba.Persistence.Migrations
                     b.Navigation("Patient");
                 });
 
-            modelBuilder.Entity("Tabtaba.Entites.Review", b =>
+            modelBuilder.Entity("Tabtaba.Entities.Review", b =>
                 {
-                    b.HasOne("Tabtaba.Entites.Doctor", "Doctor")
+                    b.HasOne("Tabtaba.Entities.Doctor", "Doctor")
                         .WithMany("Reviews")
                         .HasForeignKey("DoctorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Tabtaba.Entites.Patient", "Patient")
+                    b.HasOne("Tabtaba.Entities.Patient", "Patient")
                         .WithMany("Reviews")
                         .HasForeignKey("PatientId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1002,30 +1002,30 @@ namespace Tabtaba.Persistence.Migrations
                     b.Navigation("Patient");
                 });
 
-            modelBuilder.Entity("Tabtaba.Entites.User", b =>
+            modelBuilder.Entity("Tabtaba.Entities.User", b =>
                 {
-                    b.HasOne("Tabtaba.Entites.Doctor", "Doctor")
+                    b.HasOne("Tabtaba.Entities.Doctor", "Doctor")
                         .WithOne("User")
-                        .HasForeignKey("Tabtaba.Entites.User", "DoctorId")
+                        .HasForeignKey("Tabtaba.Entities.User", "DoctorId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Doctor");
                 });
 
-            modelBuilder.Entity("Tabtaba.Entites.CommonCondition", b =>
+            modelBuilder.Entity("Tabtaba.Entities.CommonCondition", b =>
                 {
                     b.Navigation("CommonConditions_Diagnoses");
                 });
 
-            modelBuilder.Entity("Tabtaba.Entites.Condition", b =>
+            modelBuilder.Entity("Tabtaba.Entities.Condition", b =>
                 {
                     b.Navigation("CommonConditions_Diagnoses");
 
                     b.Navigation("Diagnoses");
                 });
 
-            modelBuilder.Entity("Tabtaba.Entites.Doctor", b =>
+            modelBuilder.Entity("Tabtaba.Entities.Doctor", b =>
                 {
                     b.Navigation("Appointments");
 
@@ -1037,12 +1037,12 @@ namespace Tabtaba.Persistence.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Tabtaba.Entites.MedicalRecord", b =>
+            modelBuilder.Entity("Tabtaba.Entities.MedicalRecord", b =>
                 {
                     b.Navigation("Diagnoses");
                 });
 
-            modelBuilder.Entity("Tabtaba.Entites.Patient", b =>
+            modelBuilder.Entity("Tabtaba.Entities.Patient", b =>
                 {
                     b.Navigation("Achievements");
 
@@ -1058,7 +1058,7 @@ namespace Tabtaba.Persistence.Migrations
                     b.Navigation("Reviews");
                 });
 
-            modelBuilder.Entity("Tabtaba.Entites.User", b =>
+            modelBuilder.Entity("Tabtaba.Entities.User", b =>
                 {
                     b.Navigation("DailyMessages");
 

@@ -4,18 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Tabtaba.Entites
+namespace Tabtaba.Entities
 {
-    public class Achievement
+    public class Journal
     {
         public int Id { get; set; } 
-        public string Description { get; set; } = default!;
-        public int Progress_Level { get; set; }
+        public string Entry_Text { get; set; } = default!;
+        public string Voice_Note_Path { get; set; } = default!;
         public DateTime Date_Created { get; set; }
 
-       
+      
         public int PatientId { get; set; }
-        public  Patient Patient { get; set; } = default!;
-
+        public virtual Patient Patient { get; set; } = default!;
     }
 }

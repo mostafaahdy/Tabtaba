@@ -5,8 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Tabtaba.Shared.DTOs.IdentityDTOs
+namespace Tabtaba.Shared.Requests.IdentityRequests
 {
-   public record LoginDTO([EmailAddress]string Email , string Password);
-    
+    public record ForgotPasswordDTO([EmailAddress] string Email);
+   
 }

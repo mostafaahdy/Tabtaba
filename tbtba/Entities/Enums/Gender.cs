@@ -4,8 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Tabtaba.Shared.DTOs.IdentityDTOs
+namespace Tabtaba.Domain.Entities.Enums
 {
-    public record RegisterDTO;
-    
+    public enum Gender
+    {
+        Male = 1,
+        Female = 2
+        
+    }
 }

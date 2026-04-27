@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Tabtaba.Entites
+namespace Tabtaba.Entities
 {
     public class CommonConditions_Diagnosis
     {

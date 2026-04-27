@@ -4,15 +4,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Tabtaba.Entites
+namespace Tabtaba.Entities
 {
-    public class CommonCondition
+    public class Condition
     {
         public int Id { get; set; } 
-        public string Title { get; set; } = default!;
+        public string Condition_Name { get; set; } = default!;
         public string Description { get; set; } = default!;
 
- 
+
+        public virtual ICollection<Diagnosis> Diagnoses { get; set; } = [];
+        
         public virtual ICollection<CommonConditions_Diagnosis> CommonConditions_Diagnoses { get; set; } = [];
     }
 }

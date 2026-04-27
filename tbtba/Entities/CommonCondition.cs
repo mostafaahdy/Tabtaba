@@ -4,17 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Tabtaba.Entites
+namespace Tabtaba.Entities
 {
-    public class KnowledgeZone
+    public class CommonCondition
     {
         public int Id { get; set; } 
         public string Title { get; set; } = default!;
         public string Description { get; set; } = default!;
-        public string Media_Type { get; set; } = default!;
 
-
-        public string UserId { get; set; } = default!;
-        public virtual User User { get; set; } = default!;
+ 
+        public virtual ICollection<CommonConditions_Diagnosis> CommonConditions_Diagnoses { get; set; } = [];
     }
 }

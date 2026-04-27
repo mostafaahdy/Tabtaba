@@ -5,7 +5,7 @@ using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Tabtaba.Entites
+namespace Tabtaba.Entities
 {
     public class Review
     {

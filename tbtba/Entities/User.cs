@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.Numerics;
 
-namespace Tabtaba.Entites
+namespace Tabtaba.Entities
 {
     public class User : IdentityUser
     {

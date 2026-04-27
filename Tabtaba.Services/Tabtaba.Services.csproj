@@ -11,4 +11,9 @@
     <ProjectReference Include="..\tbtba\Tabtaba.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Features\AuthenticationServices\Commands\" />
+    <Folder Include="Features\MappingProfiles\" />
+  </ItemGroup>
+
 </Project>

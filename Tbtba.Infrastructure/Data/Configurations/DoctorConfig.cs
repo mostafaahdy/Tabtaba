@@ -6,7 +6,7 @@ using System.Linq;
 using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
-using Tabtaba.Entites;
+using Tabtaba.Entities;
 
 namespace Tabtaba.Persistence.Data.Configurations
 {
