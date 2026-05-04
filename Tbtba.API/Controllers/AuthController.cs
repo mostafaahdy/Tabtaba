@@ -1,14 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Tabtaba.Application.DTOs.Auth;
-using Tabtaba.Domain.Enums;
-
+using Tabtaba.Shared.DTOs.Auth;
+using Tabtaba.Domain.Entities.Enums;
 namespace Tabtaba.Presentation.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
 public class AuthController : ControllerBase
 {
-    /// 
+   
     [HttpPost("select-role")]
     public IActionResult SelectRole([FromBody] SelectRoleRequest request)
     {

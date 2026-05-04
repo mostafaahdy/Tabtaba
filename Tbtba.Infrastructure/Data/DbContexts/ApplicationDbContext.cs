@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Tabtaba.Domain.Entities;
 using Tabtaba.Entities;
 using Tabtaba.Persistence.Data.Configurations;
-
 
 namespace Tabtba.Persistence.Data.DbContexts
 {
@@ -10,16 +10,13 @@ namespace Tabtba.Persistence.Data.DbContexts
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-       
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppointmentConfig).Assembly);
-
         }
-              #region DbSets
 
+        #region DbSets
         public DbSet<Achievement> Achievements { get; set; }
         public DbSet<Appointment> Appointments { get; set; }
         public DbSet<CommonCondition> CommonConditions { get; set; }
@@ -36,7 +33,12 @@ namespace Tabtba.Persistence.Data.DbContexts
         public DbSet<Patient_Appointment_Doctor> Patient_Appointment_Doctors { get; set; }
         public DbSet<ProgressTracker> ProgressTrackers { get; set; }
         public DbSet<Review> Reviews { get; set; }
-        #endregion
-        }
-    }
 
+        public DbSet<Therapist> Therapists { get; set; }
+        public DbSet<TherapistEducation> TherapistEducations { get; set; }
+        public DbSet<TherapistDocument> TherapistDocuments { get; set; }
+        public DbSet<TherapistAvailability> TherapistAvailabilities { get; set; }
+        public DbSet<TherapistLanguage> TherapistLanguages { get; set; }
+        #endregion
+    }
+}

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tabtaba.Domain.Contracts;
-using Tabtaba.Entities;
+using Tabtaba.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace Tabtaba.Persistence.Specifications
@@ -17,11 +17,11 @@ namespace Tabtaba.Persistence.Specifications
                 var Query = Entrypoint;
             if( specification is not null )
             {
-                if( specification.Criateria != null )
+                if (specification.Criteria != null)
                 {
-                    Query = Query.Where(specification.Criateria);
+                    Query = Query.Where(specification.Criteria);
                 }
-                if( specification.IncludeExpressions is not null && specification.IncludeExpressions.Any() )
+                if ( specification.IncludeExpressions is not null && specification.IncludeExpressions.Any() )
                 {
                     Query = specification.IncludeExpressions.Aggregate(Query,
                         (currentQuery,includeExp) => currentQuery.Include(includeExp));

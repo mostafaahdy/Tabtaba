@@ -4,12 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Tabtaba.Domain.Entities.Enums
+namespace Tabtaba.Domain.Entities.Enums;
+
+public enum UserRole
 {
-    public enum UserRole
-    {
-        Patient,
-        Doctor,
-        Admin
-    }
+    Patient = 1,
+    Therapist = 2,
+    Admin = 3
 }
