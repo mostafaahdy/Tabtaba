@@ -28,9 +28,8 @@ namespace Tabtaba.Services.Specifications
         #endregion
 
         #region Sorting
-        public Expression<Func<TEntity,object>> OrderdBy { get; private set; }
-
-        public Expression<Func<TEntity,object>> OrderdByDescending { get; private set; }
+        public Expression<Func<TEntity, object>>? OrderdBy { get; private set; }
+        public Expression<Func<TEntity, object>>? OrderdByDescending { get; private set; }
 
         protected void AddOrderBy(Expression<Func<TEntity,object>> orderByExpression)
         {
@@ -52,10 +51,7 @@ namespace Tabtaba.Services.Specifications
         public bool IsPaginated { get; private set;}
 
 
-        //total count = 40
-        // page size = 10
-        //10 10 10 10
-        // page index = 3
+        
 
         protected void ApplyPagination(int pagesize ,int pageindex)
         {

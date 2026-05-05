@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Tabtba.Persistence.Data.DbContexts;
 
@@ -11,9 +12,11 @@ using Tabtba.Persistence.Data.DbContexts;
 namespace Tabtaba.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260505202334_AddPriceAndIsPaidToAppointment")]
+    partial class AddPriceAndIsPaidToAppointment
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -766,41 +769,6 @@ namespace Tabtaba.Persistence.Migrations
                     b.ToTable("MedicalRecords");
                 });
 
-            modelBuilder.Entity("Tabtaba.Entities.Message", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Content")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsRead")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("ReceiverId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("SenderId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("SentAt")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ReceiverId");
-
-                    b.HasIndex("SenderId");
-
-                    b.ToTable("Messages");
-                });
-
             modelBuilder.Entity("Tabtaba.Entities.Patient", b =>
                 {
                     b.Property<int>("Id")
@@ -917,34 +885,6 @@ namespace Tabtaba.Persistence.Migrations
                     b.HasIndex("PatientId");
 
                     b.ToTable("Reviews");
-                });
-
-            modelBuilder.Entity("Tabtaba.Entities.SessionNote", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("AppointmentId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("Date_Created")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("Last_Updated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Notes")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AppointmentId");
-
-                    b.ToTable("SessionNotes");
                 });
 
             modelBuilder.Entity("Tabtaba.Entities.User", b =>
@@ -1301,25 +1241,6 @@ namespace Tabtaba.Persistence.Migrations
                     b.Navigation("Patient");
                 });
 
-            modelBuilder.Entity("Tabtaba.Entities.Message", b =>
-                {
-                    b.HasOne("Tabtaba.Entities.User", "Receiver")
-                        .WithMany()
-                        .HasForeignKey("ReceiverId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("Tabtaba.Entities.User", "Sender")
-                        .WithMany()
-                        .HasForeignKey("SenderId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Receiver");
-
-                    b.Navigation("Sender");
-                });
-
             modelBuilder.Entity("Tabtaba.Entities.Patient", b =>
                 {
                     b.HasOne("Tabtaba.Entities.User", "User")
@@ -1386,17 +1307,6 @@ namespace Tabtaba.Persistence.Migrations
                     b.Navigation("Doctor");
 
                     b.Navigation("Patient");
-                });
-
-            modelBuilder.Entity("Tabtaba.Entities.SessionNote", b =>
-                {
-                    b.HasOne("Tabtaba.Entities.Appointment", "Appointment")
-                        .WithMany()
-                        .HasForeignKey("AppointmentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Appointment");
                 });
 
             modelBuilder.Entity("Tabtaba.Entities.User", b =>

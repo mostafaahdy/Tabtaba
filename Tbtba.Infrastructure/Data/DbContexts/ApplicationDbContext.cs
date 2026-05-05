@@ -8,12 +8,26 @@ namespace Tabtba.Persistence.Data.DbContexts
 {
     public class ApplicationDbContext : IdentityDbContext<User>
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+            : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppointmentConfig).Assembly);
+
+            // ── Fix Messages Cascade ───────────────────────────────────────
+            modelBuilder.Entity<Message>()
+                .HasOne(m => m.Sender)
+                .WithMany()
+                .HasForeignKey(m => m.SenderId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Message>()
+                .HasOne(m => m.Receiver)
+                .WithMany()
+                .HasForeignKey(m => m.ReceiverId)
+                .OnDelete(DeleteBehavior.NoAction);
         }
 
         #region DbSets
@@ -38,8 +52,10 @@ namespace Tabtba.Persistence.Data.DbContexts
         public DbSet<Therapist> Therapists { get; set; }
         public DbSet<TherapistEducation> TherapistEducations { get; set; }
         public DbSet<TherapistDocument> TherapistDocuments { get; set; }
-        
         public DbSet<TherapistLanguage> TherapistLanguages { get; set; }
+        public DbSet<SessionNote> SessionNotes { get; set; }
+        public DbSet<Message> Messages { get; set; }
+        public DbSet<Withdrawal> Withdrawals { get; set; }
         #endregion
     }
 }

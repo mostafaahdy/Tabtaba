@@ -8,6 +8,7 @@ using Tabtaba.Domain.Contracts;
 using Tabtaba.Domain.Entities;
 using Tabtaba.Entities;
 using Tabtaba.Persistence.Repositories;
+using Tabtaba.Presentation.Controllers;
 using Tabtaba.Services.Features.EducationServices;
 using Tabtaba.Services.Services;
 using Tabtaba.ServicesAbstraction.Interfaces;
@@ -19,12 +20,15 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
+builder.Services.AddSignalR();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IEmailService, EmailService>();
 
 builder.Services.AddIdentity<User, IdentityRole>(options =>
 {
@@ -71,8 +75,6 @@ builder.Services.AddValidatorsFromAssembly(
 
 var app = builder.Build();
 
-builder.Services.AddScoped<IEmailService, EmailService>();
-
 #region Configure the HTTP request pipeline
 if (app.Environment.IsDevelopment())
 {
@@ -84,6 +86,7 @@ app.UseStaticFiles();
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
+app.MapHub<ChatHub>("/hubs/chat");
 #endregion
 
 app.Run();

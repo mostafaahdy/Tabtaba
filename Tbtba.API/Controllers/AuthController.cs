@@ -18,7 +18,7 @@ public class AuthController : ControllerBase
     public AuthController(IMediator mediator)
         => _mediator = mediator;
 
-    // ── Login ──────────────────────────────────────────────────────────────
+    // ── Login 
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] LoginRequest request)
     {
@@ -49,7 +49,7 @@ public class AuthController : ControllerBase
         }
     }
 
-    // ── Google Sign In ─────────────────────────────────────────────────────
+    // ── Google Sign In
     [HttpGet("google-login")]
     public IActionResult GoogleLogin()
     {
@@ -78,7 +78,7 @@ public class AuthController : ControllerBase
         return Ok(response);
     }
 
-    // ── Select Role ────────────────────────────────────────────────────────
+    // ── Select Role
     [HttpPost("select-role")]
     public IActionResult SelectRole([FromBody] SelectRoleRequest request)
     {
@@ -107,7 +107,7 @@ public class AuthController : ControllerBase
         });
     }
 
-    // ── Forgot Password ────────────────────────────────────────────────────
+    // ── Forgot Password
     [HttpPost("forgot-password")]
     public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordRequest request)
     {
@@ -117,6 +117,72 @@ public class AuthController : ControllerBase
         var command = new ForgotPasswordCommand(
             request.Email,
             request.MobileNumber
+        );
+
+        var result = await _mediator.Send(command);
+
+        if (!result.Success)
+            return BadRequest(new { message = result.Message });
+
+        return Ok(new { message = result.Message });
+    }
+
+    // ── Verify OTP
+    [HttpPost("verify-otp")]
+    public async Task<IActionResult> VerifyOtp([FromBody] VerifyOtpRequest request)
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
+        var command = new VerifyOtpCommand(
+            request.Email,
+            request.Code
+        );
+
+        var result = await _mediator.Send(command);
+
+        if (!result.Success)
+            return BadRequest(new { message = result.Message });
+
+        return Ok(new
+        {
+            message = result.Message,
+            resetToken = result.ResetToken
+        });
+    }
+
+    // ── Resend OTP 
+    [HttpPost("resend-otp")]
+    public async Task<IActionResult> ResendOtp([FromBody] ResendOtpRequest request)
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
+        var command = new ForgotPasswordCommand(
+            request.Email,
+            request.MobileNumber
+        );
+
+        var result = await _mediator.Send(command);
+
+        if (!result.Success)
+            return BadRequest(new { message = result.Message });
+
+        return Ok(new { message = "OTP resent successfully." });
+    }
+
+    // ── Reset Password ─────────────────────────────────────────────────────
+    [HttpPost("reset-password")]
+    public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordRequest request)
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
+        var command = new ResetPasswordCommand(
+            request.Email,
+            request.ResetToken,
+            request.NewPassword,
+            request.ConfirmPassword
         );
 
         var result = await _mediator.Send(command);

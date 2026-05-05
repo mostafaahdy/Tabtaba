@@ -5,7 +5,7 @@ using Tabtaba.Domain.Enums;
 using Tabtaba.ServicesAbstraction;
 
 
-namespace Tabtaba.Services.Features;
+namespace Tabtaba.Services.Features.TherapistServices;
 
 public class TherapistService : ITherapistService
 {
