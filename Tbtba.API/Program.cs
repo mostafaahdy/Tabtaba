@@ -9,6 +9,8 @@ using Tabtaba.Domain.Entities;
 using Tabtaba.Entities;
 using Tabtaba.Persistence.Repositories;
 using Tabtaba.Services.Features.EducationServices;
+using Tabtaba.Services.Services;
+using Tabtaba.ServicesAbstraction.Interfaces;
 using Tabtaba.ServicesAbstraction.Validators;
 using Tabtba.Persistence.Data.DbContexts;
 
@@ -68,6 +70,8 @@ builder.Services.AddValidatorsFromAssembly(
     typeof(EducationValidator).Assembly);
 
 var app = builder.Build();
+
+builder.Services.AddScoped<IEmailService, EmailService>();
 
 #region Configure the HTTP request pipeline
 if (app.Environment.IsDevelopment())

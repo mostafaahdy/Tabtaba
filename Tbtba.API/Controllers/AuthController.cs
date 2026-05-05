@@ -64,7 +64,7 @@ public class AuthController : ControllerBase
     public async Task<IActionResult> GoogleCallback()
     {
         var result = await HttpContext.AuthenticateAsync(
-            IdentityConstants.ExternalScheme); // ✅ الصح
+            IdentityConstants.ExternalScheme);
 
         if (!result.Succeeded)
             return Unauthorized();
@@ -105,5 +105,25 @@ public class AuthController : ControllerBase
             message = "Role selected successfully.",
             data = redirectInfo
         });
+    }
+
+    // ── Forgot Password ────────────────────────────────────────────────────
+    [HttpPost("forgot-password")]
+    public async Task<IActionResult> ForgotPassword([FromBody] ForgotPasswordRequest request)
+    {
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+
+        var command = new ForgotPasswordCommand(
+            request.Email,
+            request.MobileNumber
+        );
+
+        var result = await _mediator.Send(command);
+
+        if (!result.Success)
+            return BadRequest(new { message = result.Message });
+
+        return Ok(new { message = result.Message });
     }
 }
