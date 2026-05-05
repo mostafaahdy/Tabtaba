@@ -2,17 +2,15 @@
 
 public enum DocumentType
 {
-    
-    GraduationCertificate = 1,
-    ProfessionalLicense = 2,
-    MedicalAssociationCertificate = 3,
-    PostgraduateDegree = 4,
-
-    MasterOfScienceOrArts = 5,
-    ProofOfSupervision = 6,
-
-  
-    YearsOfExperienceProof = 7,
-    YearsOfClinicalExperience = 8,
-    YearsOfCounselingExperience = 9
+    CV = 1,
+    CertifiedCertificate = 2,
+    GraduationCertificate = 3,
+    ProfessionalLicense = 4,
+    MedicalAssociationCertificate = 5,
+    PostgraduateDegree = 6,
+    MasterOfScienceOrArts = 7,
+    ProofOfSupervision = 8,
+    YearsOfExperienceProof = 9,
+    YearsOfClinicalExperience = 10,
+    YearsOfCounselingExperience = 11
 }

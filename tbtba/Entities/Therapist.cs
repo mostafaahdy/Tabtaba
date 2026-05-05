@@ -23,7 +23,7 @@ public class Therapist
  
     public string? CvUrl { get; set; }
 
-   
+    public TherapistProfessionalInfo? ProfessionalInfo { get; set; }
     public string? Specialization { get; set; }
     public string? Bio { get; set; }
     public int? YearsOfExperience { get; set; }

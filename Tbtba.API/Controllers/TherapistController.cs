@@ -21,6 +21,42 @@ public class TherapistController : ControllerBase
         _therapistService = therapistService;
         _mediator = mediator;
     }
+   
+
+    [HttpPost("professional-info")]
+    public async Task<IActionResult> SaveProfessionalInfo(
+        [FromBody] ProfessionalInfoRequest request)
+    {
+        if (!ModelState.IsValid)
+        {
+            var validationErrors = ModelState
+                .Where(x => x.Value?.Errors.Count > 0)
+                .ToDictionary(
+                    kvp => kvp.Key,
+                    kvp => kvp.Value!.Errors.Select(e => e.ErrorMessage).ToArray()
+                );
+            return BadRequest(new { message = "Validation failed.", errors = validationErrors });
+        }
+
+        var command = new SaveProfessionalInfoCommand(
+            request.TherapistId,
+            request.ProfessionalCategory,
+            request.Specialization,
+            request.YearsOfExperience,
+            request.LicensingAuthority,
+            request.LicenseNumber
+        );
+
+        await _mediator.Send(command);
+
+        return Ok(new
+        {
+            message = "Professional info saved successfully.",
+            nextStep = "/api/therapist/submit-criteria"
+        });
+    }
+
+
 
     [HttpPost("upload-cv")]
     [Consumes("multipart/form-data")]
@@ -70,6 +106,36 @@ public class TherapistController : ControllerBase
         }
     }
 
+    [HttpPost("availability")]
+    public async Task<IActionResult> SaveAvailability(
+    [FromBody] SaveAvailabilityRequest request)
+    {
+        if (!ModelState.IsValid)
+        {
+            var validationErrors = ModelState
+                .Where(x => x.Value?.Errors.Count > 0)
+                .ToDictionary(
+                    kvp => kvp.Key,
+                    kvp => kvp.Value!.Errors.Select(e => e.ErrorMessage).ToArray()
+                );
+            return BadRequest(new { message = "Validation failed.", errors = validationErrors });
+        }
+
+        var command = new SaveAvailabilityCommand(
+            request.TherapistId,
+            request.WorksAtClinic,
+            request.DaysAvailability
+        );
+
+        await _mediator.Send(command);
+
+        return Ok(new
+        {
+            message = "Availability saved successfully.",
+            nextStep = "/api/therapist/submit-criteria"
+        });
+    }
+
     [HttpGet("required-documents/{category}")]
     public IActionResult GetRequiredDocuments(TherapistCategory category)
     {
@@ -84,6 +150,39 @@ public class TherapistController : ControllerBase
                 id = (int)d,
                 name = d.ToString()
             })
+        });
+    }
+
+
+
+    [HttpPost("verification")]
+    [Consumes("multipart/form-data")]
+    public async Task<IActionResult> UploadVerification(
+    [FromForm] UploadVerificationRequest request)
+    {
+        if (!ModelState.IsValid)
+        {
+            var validationErrors = ModelState
+                .Where(x => x.Value?.Errors.Count > 0)
+                .ToDictionary(
+                    kvp => kvp.Key,
+                    kvp => kvp.Value!.Errors.Select(e => e.ErrorMessage).ToArray()
+                );
+            return BadRequest(new { message = "Validation failed.", errors = validationErrors });
+        }
+
+        var command = new UploadVerificationCommand(
+            request.TherapistId,
+            request.CvFile,
+            request.CertificateFiles
+        );
+
+        await _mediator.Send(command);
+
+        return Ok(new
+        {
+            message = "Verification documents uploaded successfully.",
+            nextStep = "Registration complete. Pending admin review."
         });
     }
 

@@ -6,8 +6,14 @@ public class TherapistAvailability
     public Guid TherapistId { get; set; }
     public Therapist Therapist { get; set; } = null!;
 
-    public DayOfWeek DayOfWeek { get; set; }     
-    public TimeOnly StartTime { get; set; }       
-    public TimeOnly EndTime { get; set; }          
+    public bool WorksAtClinic { get; set; }
+    public DayOfWeek DayOfWeek { get; set; }
     public bool IsAvailable { get; set; } = true;
+
+    public TimeOnly StartTime { get; set; }
+    public TimeOnly EndTime { get; set; }
+    public TimeOnly? FromTime { get; set; }
+    public TimeOnly? ToTime { get; set; }
+
+    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 }

@@ -6,7 +6,7 @@ namespace Tabtaba.Entities
     public class User : IdentityUser
     {
         public int Id { get; set; }
-        public string F_Name { get; set; }  = default!;
+        public string FullName { get; set; }  = default!;
         public string L_Name { get; set; }  = default!;
         public string Phone { get; set; }   = default!;
         public string Email { get; set; } = default!;

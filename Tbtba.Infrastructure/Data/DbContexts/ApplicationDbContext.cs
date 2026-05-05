@@ -22,6 +22,7 @@ namespace Tabtba.Persistence.Data.DbContexts
         public DbSet<CommonCondition> CommonConditions { get; set; }
         public DbSet<CommonConditions_Diagnosis> CommonConditions_Diagnoses { get; set; }
         public DbSet<Condition> Conditions { get; set; }
+        public DbSet<TherapistAvailability> TherapistAvailabilities { get; set; }
         public DbSet<DailyMessages> DailyMessages { get; set; }
         public DbSet<Diagnosis> Diagnoses { get; set; }
         public DbSet<Doctor> Doctors { get; set; }
@@ -33,11 +34,11 @@ namespace Tabtba.Persistence.Data.DbContexts
         public DbSet<Patient_Appointment_Doctor> Patient_Appointment_Doctors { get; set; }
         public DbSet<ProgressTracker> ProgressTrackers { get; set; }
         public DbSet<Review> Reviews { get; set; }
-
+        public DbSet<TherapistProfessionalInfo> TherapistProfessionalInfos { get; set; }
         public DbSet<Therapist> Therapists { get; set; }
         public DbSet<TherapistEducation> TherapistEducations { get; set; }
         public DbSet<TherapistDocument> TherapistDocuments { get; set; }
-        public DbSet<TherapistAvailability> TherapistAvailabilities { get; set; }
+        
         public DbSet<TherapistLanguage> TherapistLanguages { get; set; }
         #endregion
     }

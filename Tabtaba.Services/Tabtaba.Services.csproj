@@ -7,6 +7,7 @@
 	<ItemGroup>
 		<PackageReference Include="MediatR" Version="14.1.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.18.0" />
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\Tabtaba.ServicesAbstraction\Tabtaba.ServicesAbstraction.csproj" />
@@ -16,5 +17,8 @@
 	<ItemGroup>
 		<Folder Include="Features\AuthenticationServices\Commands\" />
 		<Folder Include="Features\MappingProfiles\" />
+	</ItemGroup>
+	<ItemGroup>
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
 	</ItemGroup>
 </Project>
