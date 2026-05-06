@@ -1,7 +1,9 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 using System.Security.Claims;
 using Tabtaba.Domain.Entities.Enums;
 using Tabtaba.ServicesAbstraction.Commands;
@@ -18,8 +20,9 @@ public class AuthController : ControllerBase
     public AuthController(IMediator mediator)
         => _mediator = mediator;
 
-    // ── Login 
+    // ── Login
     [HttpPost("login")]
+    [EnableRateLimiting("LoginPolicy")] // ✅
     public async Task<IActionResult> Login([FromBody] LoginRequest request)
     {
         if (!ModelState.IsValid)
@@ -38,8 +41,7 @@ public class AuthController : ControllerBase
             var command = new LoginCommand(
                 request.Email,
                 request.Password,
-                request.AgreeToTerms
-            );
+                request.AgreeToTerms);
             var result = await _mediator.Send(command);
             return Ok(result);
         }
@@ -100,11 +102,7 @@ public class AuthController : ControllerBase
             _ => null
         };
 
-        return Ok(new
-        {
-            message = "Role selected successfully.",
-            data = redirectInfo
-        });
+        return Ok(new { message = "Role selected successfully.", data = redirectInfo });
     }
 
     // ── Forgot Password
@@ -114,11 +112,7 @@ public class AuthController : ControllerBase
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
-        var command = new ForgotPasswordCommand(
-            request.Email,
-            request.MobileNumber
-        );
-
+        var command = new ForgotPasswordCommand(request.Email, request.MobileNumber);
         var result = await _mediator.Send(command);
 
         if (!result.Success)
@@ -134,35 +128,23 @@ public class AuthController : ControllerBase
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
-        var command = new VerifyOtpCommand(
-            request.Email,
-            request.Code
-        );
-
+        var command = new VerifyOtpCommand(request.Email, request.Code);
         var result = await _mediator.Send(command);
 
         if (!result.Success)
             return BadRequest(new { message = result.Message });
 
-        return Ok(new
-        {
-            message = result.Message,
-            resetToken = result.ResetToken
-        });
+        return Ok(new { message = result.Message, resetToken = result.ResetToken });
     }
 
-    // ── Resend OTP 
+    // ── Resend OTP
     [HttpPost("resend-otp")]
     public async Task<IActionResult> ResendOtp([FromBody] ResendOtpRequest request)
     {
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
-        var command = new ForgotPasswordCommand(
-            request.Email,
-            request.MobileNumber
-        );
-
+        var command = new ForgotPasswordCommand(request.Email, request.MobileNumber);
         var result = await _mediator.Send(command);
 
         if (!result.Success)
@@ -171,7 +153,7 @@ public class AuthController : ControllerBase
         return Ok(new { message = "OTP resent successfully." });
     }
 
-    // ── Reset Password ─────────────────────────────────────────────────────
+    // ── Reset Password
     [HttpPost("reset-password")]
     public async Task<IActionResult> ResetPassword([FromBody] ResetPasswordRequest request)
     {
@@ -182,8 +164,7 @@ public class AuthController : ControllerBase
             request.Email,
             request.ResetToken,
             request.NewPassword,
-            request.ConfirmPassword
-        );
+            request.ConfirmPassword);
 
         var result = await _mediator.Send(command);
 
@@ -191,5 +172,76 @@ public class AuthController : ControllerBase
             return BadRequest(new { message = result.Message });
 
         return Ok(new { message = result.Message });
+    }
+
+    // ── Register Patient
+    [HttpPost("register/patient")]
+    public async Task<IActionResult> RegisterPatient([FromBody] RegisterPatientRequest request)
+    {
+        try
+        {
+            var command = new RegisterPatientCommand(
+                request.FullName,
+                request.L_Name,
+                request.Email,
+                request.Phone,
+                request.Password,
+                request.Gender,
+                request.DateOfBirth,
+                request.MaritalStatus);
+
+            var result = await _mediator.Send(command);
+            return Ok(result);
+        }
+        catch (InvalidOperationException ex)
+        {
+            return Conflict(new { message = ex.Message });
+        }
+    }
+
+    // ── Register Therapist
+    [HttpPost("register/therapist")]
+    public async Task<IActionResult> RegisterTherapist([FromBody] RegisterTherapistRequest request)
+    {
+        try
+        {
+            var command = new RegisterTherapistCommand(
+                request.FullName,
+                request.L_Name,
+                request.Email,
+                request.Phone,
+                request.Password,
+                request.Gender,
+                request.Specialization,
+                request.YearsOfExperience,
+                request.LicenseNumber);
+
+            var result = await _mediator.Send(command);
+            return Ok(result);
+        }
+        catch (InvalidOperationException ex)
+        {
+            return Conflict(new { message = ex.Message });
+        }
+    }
+
+    // ── Refresh Token
+    [HttpPost("refresh-token")]
+    [AllowAnonymous]
+    public async Task<IActionResult> RefreshToken([FromBody] RefreshTokenRequest request)
+    {
+        try
+        {
+            var command = new RefreshTokenCommand(
+                request.AccessToken,
+                request.RefreshToken);
+
+            var result = await _mediator.Send(command);
+            return Ok(result);
+        }
+        catch (UnauthorizedAccessException ex)
+        {
+            return Unauthorized(new { message = ex.Message });
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json;
 using Tabtaba.Domain.Entities;
 using Tabtaba.Entities;
 using Tabtaba.Persistence.Data.Configurations;
@@ -16,7 +17,6 @@ namespace Tabtba.Persistence.Data.DbContexts
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppointmentConfig).Assembly);
 
-            // ── Fix Messages Cascade ───────────────────────────────────────
             modelBuilder.Entity<Message>()
                 .HasOne(m => m.Sender)
                 .WithMany()
@@ -28,6 +28,44 @@ namespace Tabtba.Persistence.Data.DbContexts
                 .WithMany()
                 .HasForeignKey(m => m.ReceiverId)
                 .OnDelete(DeleteBehavior.NoAction);
+        }
+
+        public override async Task<int> SaveChangesAsync(
+            CancellationToken cancellationToken = default)
+        {
+            var auditLogs = new List<AuditLog>();
+
+            foreach (var entry in ChangeTracker.Entries())
+            {
+                if (entry.Entity is AuditLog ||
+                    entry.State is EntityState.Detached or EntityState.Unchanged)
+                    continue;
+
+                var audit = new AuditLog
+                {
+                    EntityName = entry.Entity.GetType().Name,
+                    Action = entry.State.ToString(),
+                    CreatedAt = DateTime.UtcNow,
+                    NewValues = entry.State != EntityState.Deleted
+                        ? JsonSerializer.Serialize(entry.CurrentValues.ToObject())
+                        : null,
+                    OldValues = entry.State != EntityState.Added
+                        ? JsonSerializer.Serialize(entry.OriginalValues.ToObject())
+                        : null
+                };
+
+                auditLogs.Add(audit);
+            }
+
+            var result = await base.SaveChangesAsync(cancellationToken);
+
+            if (auditLogs.Any())
+            {
+                await AuditLogs.AddRangeAsync(auditLogs, cancellationToken);
+                await base.SaveChangesAsync(cancellationToken);
+            }
+
+            return result;
         }
 
         #region DbSets
@@ -60,6 +98,7 @@ namespace Tabtba.Persistence.Data.DbContexts
         public DbSet<Subscription> Subscriptions { get; set; }
         public DbSet<PaymentCard> PaymentCards { get; set; }
         public DbSet<Payment> Payments { get; set; }
+        public DbSet<AuditLog> AuditLogs { get; set; }
         #endregion
     }
 }

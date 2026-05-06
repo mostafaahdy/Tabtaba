@@ -13,3 +13,4 @@ namespace Tabtaba.Domain.Contracts
         IGenericRepository<TEntity> GetRepository<TEntity>() where TEntity: class;
     }
 }
+

@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MediatR;
+﻿using MediatR;
 using Tabtaba.Domain.Contracts;
 using Tabtaba.Domain.Entities;
+using Tabtaba.Services.Services;
 using Tabtaba.ServicesAbstraction.Commands;
 using Tabtaba.Shared.DTOs.Payment;
 
@@ -14,22 +10,27 @@ namespace Tabtaba.Services.Features.PaymentServices;
 public class AddCardHandler : IRequestHandler<AddCardCommand, AddCardResponse>
 {
     private readonly IUnitOfWork _unitOfWork;
+    private readonly EncryptionService _encryption;
 
-    public AddCardHandler(IUnitOfWork unitOfWork)
-        => _unitOfWork = unitOfWork;
+    public AddCardHandler(
+        IUnitOfWork unitOfWork,
+        EncryptionService encryption)
+    {
+        _unitOfWork = unitOfWork;
+        _encryption = encryption;
+    }
 
     public async Task<AddCardResponse> Handle(
         AddCardCommand request,
         CancellationToken cancellationToken)
     {
-        // بنحفظ آخر 4 أرقام بس
         var maskedNumber = "**** **** **** " + request.CardNumber[^4..];
 
         var card = new PaymentCard
         {
-            CardHolderName = request.CardHolderName,
+            CardHolderName = _encryption.Encrypt(request.CardHolderName),
             MaskedCardNumber = maskedNumber,
-            ExpiryDate = request.ExpiryDate,
+            ExpiryDate = _encryption.Encrypt(request.ExpiryDate),
             UserId = request.UserId,
             IsDefault = false,
             CreatedAt = DateTime.UtcNow
@@ -42,9 +43,9 @@ public class AddCardHandler : IRequestHandler<AddCardCommand, AddCardResponse>
         return new AddCardResponse
         {
             Id = card.Id,
-            CardHolderName = card.CardHolderName,
+            CardHolderName = request.CardHolderName,
             MaskedCardNumber = card.MaskedCardNumber,
-            ExpiryDate = card.ExpiryDate,
+            ExpiryDate = request.ExpiryDate,
             IsDefault = card.IsDefault
         };
     }

@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Tabtaba.ServicesAbstraction.Commands;
+using Tabtaba.ServicesAbstraction.Queries;
 using Tabtaba.Shared.DTOs.Payment;
 
 namespace Tabtaba.Presentation.Controllers;
@@ -33,13 +29,12 @@ public class PaymentController : ControllerBase
         var result = await _mediator.Send(command);
         return Ok(result);
     }
+
     [HttpPost("vodafone-pay")]
     public async Task<IActionResult> VodafonePay([FromBody] VodafonePayRequest request)
     {
-       
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
-
         try
         {
             var command = new VodafonePayCommand(
@@ -50,13 +45,46 @@ public class PaymentController : ControllerBase
             var result = await _mediator.Send(command);
             return Ok(result);
         }
-        catch (KeyNotFoundException ex)      
+        catch (KeyNotFoundException ex)
         {
             return NotFound(new { message = ex.Message });
         }
-        catch (InvalidOperationException ex) 
+        catch (InvalidOperationException ex)
         {
             return Conflict(new { message = ex.Message });
+        }
+    } //  fawrypay 
+
+    [HttpPost("fawry-pay")]
+    public async Task<IActionResult> FawryPay([FromBody] FawryPayRequest request)
+    {
+        try
+        {
+            var command = new FawryPayCommand(
+                request.PatientId,
+                request.AppointmentId);
+
+            var result = await _mediator.Send(command);
+            return Ok(result);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new { message = ex.Message });
+        }
+
+    }
+
+    [HttpGet("transaction/{paymentId}")]
+    public async Task<IActionResult> GetTransaction(int paymentId)
+    {
+        try
+        {
+            var result = await _mediator.Send(new GetTransactionQuery(paymentId));
+            return Ok(result);
+        }
+        catch (KeyNotFoundException ex)
+        {
+            return NotFound(new { message = ex.Message });
         }
     }
 }
