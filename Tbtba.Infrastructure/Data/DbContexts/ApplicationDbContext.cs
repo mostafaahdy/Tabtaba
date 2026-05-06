@@ -56,6 +56,10 @@ namespace Tabtba.Persistence.Data.DbContexts
         public DbSet<SessionNote> SessionNotes { get; set; }
         public DbSet<Message> Messages { get; set; }
         public DbSet<Withdrawal> Withdrawals { get; set; }
+        public DbSet<Plan> Plans { get; set; }
+        public DbSet<Subscription> Subscriptions { get; set; }
+        public DbSet<PaymentCard> PaymentCards { get; set; }
+        public DbSet<Payment> Payments { get; set; }
         #endregion
     }
 }
