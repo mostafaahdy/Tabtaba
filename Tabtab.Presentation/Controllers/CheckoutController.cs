@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Tabtaba.ServicesAbstraction.Commands;
 using Tabtaba.ServicesAbstraction.Queries;
-using Tabtaba.Shared.DTOs.Checkout;
+using Tabtaba.Shared.Checkout;
 
 namespace Tabtaba.Presentation.Controllers;
 

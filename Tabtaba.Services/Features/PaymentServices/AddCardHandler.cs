@@ -1,9 +1,9 @@
 ﻿using MediatR;
 using Tabtaba.Domain.Contracts;
-using Tabtaba.Domain.Entities;
+using Tabtaba.Domain.Entities.BaymentgatewayEntity;
 using Tabtaba.Services.Services;
 using Tabtaba.ServicesAbstraction.Commands;
-using Tabtaba.Shared.DTOs.Payment;
+using Tabtaba.Shared.Payment;
 
 namespace Tabtaba.Services.Features.PaymentServices;
 

@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tabtaba.Domain.Contracts;
-using Tabtaba.Domain.Entities;
-using Tabtaba.Entities;
+using Tabtaba.Domain.Entities.BaymentgatewayEntity;
+using Tabtaba.Domain.Entities.UserEntity;
 using Tabtaba.ServicesAbstraction.Commands;
-using Tabtaba.Shared.DTOs.Payment;
+using Tabtaba.Shared.Payment;
 
 namespace Tabtaba.Services.Features.PaymentServices;
 

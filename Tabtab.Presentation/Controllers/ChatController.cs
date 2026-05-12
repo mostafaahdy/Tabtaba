@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using Tabtaba.ServicesAbstraction.Commands;
 using Tabtaba.ServicesAbstraction.Queries;
-using Tabtaba.Shared.DTOs.Chat;
+using Tabtaba.Shared.Chat;
 
 namespace Tabtaba.Presentation.Controllers;
 

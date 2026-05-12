@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using MediatR;
 using Tabtaba.Domain.Contracts;
-using Tabtaba.Entities;
+using Tabtaba.Domain.Entities.TherapistEntity;
 using Tabtaba.ServicesAbstraction.Commands;
-using Tabtaba.Shared.DTOs.Session;
+using Tabtaba.Shared.Session;
 
 namespace Tabtaba.Services.Features.SessionServices;
 

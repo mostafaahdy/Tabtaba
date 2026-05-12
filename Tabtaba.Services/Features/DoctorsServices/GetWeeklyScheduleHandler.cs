@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Tabtaba.Domain.Contracts;
-using Tabtaba.Entities;
+using Tabtaba.Domain.Entities.TherapistEntity;
+using Tabtaba.Domain.Entities.UserEntity;
 using Tabtaba.ServicesAbstraction.Queries;
-using Tabtaba.Shared.DTOs.Schedule;
+using Tabtaba.Shared.Schedule;
 
 namespace Tabtaba.Services.Features.DoctorsServices;
 
@@ -55,10 +56,10 @@ public class GetWeeklyScheduleHandler : IRequestHandler<GetWeeklyScheduleQuery, 
             AppointmentId = a.Id,
             PatientName = a.Patient?.User?.FullName + " " + a.Patient?.User?.L_Name,
             SessionTime = a.Date_Time,
-            DurationMinutes = (int)a.Duration_Minutes,
+            DurationMinutes = a.Duration_Minutes,
             SessionType = a.Session_Type,
             LocationMode = a.Location_Mode,
-            Status = a.Status
+            Status = a.Status.ToString()
         }).ToList();
 
         return new WeeklyScheduleResponse

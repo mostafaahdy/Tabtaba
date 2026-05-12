@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.RateLimiting;
 using System.Security.Claims;
 using Tabtaba.Domain.Entities.Enums;
 using Tabtaba.ServicesAbstraction.Commands;
-using Tabtaba.Shared.DTOs.Auth;
+using Tabtaba.Shared.Auth;
 
 namespace Tabtaba.Presentation.Controllers;
 
@@ -22,7 +22,7 @@ public class AuthController : ControllerBase
 
     // ── Login
     [HttpPost("login")]
-    [EnableRateLimiting("LoginPolicy")] // ✅
+    [EnableRateLimiting("LoginPolicy")] // 
     public async Task<IActionResult> Login([FromBody] LoginRequest request)
     {
         if (!ModelState.IsValid)
@@ -243,5 +243,16 @@ public class AuthController : ControllerBase
         {
             return Unauthorized(new { message = ex.Message });
         }
+    }
+    [HttpPost("logout")]
+    [Authorize] 
+    public async Task<IActionResult> Logout()
+    {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if( string.IsNullOrEmpty(userId) ) return BadRequest();
+        var command = new LogoutCommand(int.Parse(userId));
+        var result = await _mediator.Send(command);
+
+        return result ? Ok(new { message = "Logged out successfully" }) : BadRequest();
     }
 }

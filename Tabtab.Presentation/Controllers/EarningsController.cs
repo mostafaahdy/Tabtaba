@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Tabtaba.ServicesAbstraction.Commands;
 using Tabtaba.ServicesAbstraction.Queries;
-using Tabtaba.Shared.DTOs.Earnings;
+using Tabtaba.Shared.Earnings;
 
 namespace Tabtaba.Presentation.Controllers;
 

@@ -5,7 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using MediatR;
 using Tabtaba.Domain.Contracts;
-using Tabtaba.Entities;
+using Tabtaba.Domain.Entities.TherapistEntity;
+using Tabtaba.Domain.Entities.UserEntity;
 using Tabtaba.ServicesAbstraction.Commands;
 
 namespace Tabtaba.Services.Features.SessionServices;
@@ -23,9 +24,8 @@ public class SaveEmotionalStatusHandler : IRequestHandler<SaveEmotionalStatusCom
         SaveEmotionalStatusCommand request,
         CancellationToken cancellationToken)
     {
-        var appointments = await _unitOfWork.GetRepository<Appointment>().GetAllAsync();
-        var appointment = appointments.FirstOrDefault(a => a.Id == request.AppointmentId);
-
+        var appointment = await _unitOfWork.GetRepository<Appointment>().GetByIdAsync(request.AppointmentId);
+        
         if (appointment is null)
             return false;
 

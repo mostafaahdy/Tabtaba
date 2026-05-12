@@ -6,7 +6,7 @@ using System.Linq;
 using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
-using Tabtaba.Entities;
+using Tabtaba.Domain.Entities.UserEntity;
 
 namespace Tabtaba.Persistence.Data.Configurations
 {
@@ -24,6 +24,9 @@ namespace Tabtaba.Persistence.Data.Configurations
                 .WithMany(d => d.Appointments)
                 .HasForeignKey(a => a.DoctorId)
                 .OnDelete(DeleteBehavior.NoAction);
+
+            builder.Property(a => a.Status)
+                .HasConversion<string>();
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http;
 using Tabtaba.Domain.Contracts;
-using Tabtaba.Domain.Entities;
+using Tabtaba.Domain.Entities.TherapistEntity;
 using Tabtaba.Domain.Enums;
 using Tabtaba.ServicesAbstraction.Commands;
 

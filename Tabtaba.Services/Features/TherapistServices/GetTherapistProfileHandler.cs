@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tabtaba.Domain.Contracts;
-using Tabtaba.Domain.Entities;
-using Tabtaba.Entities;
+using Tabtaba.Domain.Entities.TherapistEntity;
+using Tabtaba.Domain.Entities.UserEntity;
 using Tabtaba.ServicesAbstraction.Queries;
-using Tabtaba.Shared.DTOs.Therapist;
+using Tabtaba.Shared.Therapist;
 
 namespace Tabtaba.Services.Features.TherapistServices;
 
@@ -29,12 +29,12 @@ public class GetTherapistProfileHandler
         var therapist = therapists.FirstOrDefault(t => t.Id == request.TherapistId);
 
         if (therapist is null)
-            throw new Exception("Therapist not found.");
+            throw new Exception("Therapist not found");
 
         var appointmentRepo = _unitOfWork.GetRepository<Appointment>();
         var allAppointments = await appointmentRepo.GetAllAsync();
         var therapistAppointments = allAppointments
-            .Where(a => a.DoctorId == 0) // هنربطه بالـ TherapistId
+            .Where(a => a.DoctorId != 0) //  TherapistId
             .ToList();
 
         return new TherapistProfileResponse

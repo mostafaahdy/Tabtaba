@@ -5,9 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using MediatR;
 using Tabtaba.Domain.Contracts;
-using Tabtaba.Domain.Entities;
+using Tabtaba.Domain.Entities.BaymentgatewayEntity;
+using Tabtaba.Domain.Entities.TherapistEntity;
 using Tabtaba.ServicesAbstraction.Commands;
-using Tabtaba.Shared.DTOs.Checkout;
+using Tabtaba.Shared.Checkout;
 
 namespace Tabtaba.Services.Features.CheckoutServices;
 

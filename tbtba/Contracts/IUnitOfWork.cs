@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Tabtaba.Domain.Entities;
 
 namespace Tabtaba.Domain.Contracts
 {
@@ -11,6 +12,7 @@ namespace Tabtaba.Domain.Contracts
         Task<int> SaveChangesAsync();
         ValueTask DisposeAsync();
         IGenericRepository<TEntity> GetRepository<TEntity>() where TEntity: class;
+       
     }
 }
 

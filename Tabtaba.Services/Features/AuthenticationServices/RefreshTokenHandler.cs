@@ -11,9 +11,9 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
-using Tabtaba.Entities;
 using Tabtaba.ServicesAbstraction.Commands;
-using Tabtaba.Shared.DTOs.Auth;
+using Tabtaba.Shared.Auth;
+using Tabtaba.Domain.Entities.UserEntity;
 
 namespace Tabtaba.Services.Features.AuthenticationServices;
 

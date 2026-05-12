@@ -3,10 +3,10 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Tabtaba.Domain.Contracts;
 using Tabtaba.Domain.Entities;
-using Tabtaba.Entities;
+using Tabtaba.Domain.Entities.TherapistEntity;
+using Tabtaba.Domain.Entities.UserEntity;
 using Tabtaba.ServicesAbstraction.Queries;
-using Tabtaba.Shared.DTOs.Doctor;
-
+using Tabtaba.Shared.Doctor;
 namespace Tabtaba.Services.Features.DoctorServices;
 
 public class GetDoctorDashboardHandler : IRequestHandler<GetDoctorDashboardQuery, DoctorDashboardResponse>

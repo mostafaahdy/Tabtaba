@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using MediatR;
-using Tabtaba.Shared.DTOs.Checkout;
+using Tabtaba.Shared.Checkout;
 
 namespace Tabtaba.ServicesAbstraction.Queries;
 

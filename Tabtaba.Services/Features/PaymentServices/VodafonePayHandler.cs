@@ -5,10 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tabtaba.Domain.Contracts;
-using Tabtaba.Domain.Entities;
-using Tabtaba.Entities;
+using Tabtaba.Domain.Entities.BaymentgatewayEntity;
+using Tabtaba.Domain.Entities.Enums;
+using Tabtaba.Domain.Entities.UserEntity;
 using Tabtaba.ServicesAbstraction.Commands;
-using Tabtaba.Shared.DTOs.Payment;
+using Tabtaba.Shared.Payment;
 
 namespace Tabtaba.Services.Features.PaymentServices;
 
@@ -58,7 +59,7 @@ public class VodafonePayHandler : IRequestHandler<VodafonePayCommand, VodafonePa
         await paymentRepo.AddAsync(payment);
 
         appointment.IsPaid = true;
-        appointment.Status = "Confirmed";
+        appointment.Status = AppointmentStatus.Confirmed;
         await _unitOfWork.SaveChangesAsync();
 
         return new VodafonePayResponse

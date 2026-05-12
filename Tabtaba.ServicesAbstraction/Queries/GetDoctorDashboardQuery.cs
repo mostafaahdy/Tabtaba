@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MediatR;
-using Tabtaba.Shared.DTOs.Doctor;
+using Tabtaba.Shared.Doctor;
 
 namespace Tabtaba.ServicesAbstraction.Queries;
 

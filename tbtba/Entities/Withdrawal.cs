@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Tabtaba.Entities;
+using Tabtaba.Domain.Entities.TherapistEntity;
 
 namespace Tabtaba.Domain.Entities;
 

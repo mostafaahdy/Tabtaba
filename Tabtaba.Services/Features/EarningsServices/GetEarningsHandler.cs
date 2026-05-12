@@ -6,9 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Tabtaba.Domain.Contracts;
 using Tabtaba.Domain.Entities;
-using Tabtaba.Entities;
+using Tabtaba.Domain.Entities.UserEntity;
 using Tabtaba.ServicesAbstraction.Queries;
-using Tabtaba.Shared.DTOs.Earnings;
+using Tabtaba.Shared.Earnings;
 
 namespace Tabtaba.Services.Features.EarningsServices;
 
@@ -42,7 +42,7 @@ public class GetEarningsHandler : IRequestHandler<GetEarningsQuery, EarningsResp
 
         
         var total = appointments
-            .Where(a => a.IsPaid && a.Status == "Completed")
+            .Where(a => a.IsPaid && a.Status.ToString() == "Completed")
             .Sum(a => a.Price) - totalWithdrawn;
 
         var pending = appointments
@@ -91,7 +91,7 @@ public class GetEarningsHandler : IRequestHandler<GetEarningsQuery, EarningsResp
             {
                 Description = "Consultation Session",
                 Amount = a.IsPaid ? a.Price : -a.Price,
-                Status = a.Status,
+                Status = a.Status.ToString(),
                 Date = a.Date_Time
             })
             .ToList();

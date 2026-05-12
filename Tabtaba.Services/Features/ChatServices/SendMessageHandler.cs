@@ -6,9 +6,10 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Tabtaba.Domain.Contracts;
-using Tabtaba.Entities;
+using Tabtaba.Domain.Entities.TherapistEntity;
+using Tabtaba.Domain.Entities.UserEntity;
 using Tabtaba.ServicesAbstraction.Commands;
-using Tabtaba.Shared.DTOs.Chat;
+using Tabtaba.Shared.Chat;
 
 namespace Tabtaba.Services.Features.ChatServices;
 

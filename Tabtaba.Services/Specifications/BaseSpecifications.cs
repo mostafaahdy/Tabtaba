@@ -25,6 +25,14 @@ namespace Tabtaba.Services.Specifications
         {
             IncludeExpressions.Add(includeExp);
         }
+        public List<string> IncludeStrings { get; } = new List<string>();
+
+        protected void AddInclude(string includeString)
+        {
+            IncludeStrings.Add(includeString);
+        }
+
+
         #endregion
 
         #region Sorting

@@ -3,7 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Tabtaba.Domain.Enums;
 using Tabtaba.ServicesAbstraction;
 using Tabtaba.ServicesAbstraction.Commands;
-using Tabtaba.Shared.DTOs.Therapist;
+using Tabtaba.Shared;
+using Tabtaba.Shared.Therapist;
 
 namespace Tabtaba.Web.Controllers;
 

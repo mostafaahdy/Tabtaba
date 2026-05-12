@@ -1,4 +1,5 @@
 ﻿using Tabtaba.Domain.Contracts;
+using Tabtaba.Domain.Entities;
 using Tabtba.Persistence.Data.DbContexts;
 
 namespace Tabtaba.Persistence.Repositories;

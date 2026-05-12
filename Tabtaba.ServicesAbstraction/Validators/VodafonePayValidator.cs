@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FluentValidation;
-using Tabtaba.Shared.DTOs.Payment;
+using Tabtaba.Shared.Payment;
 
 namespace Tabtaba.ServicesAbstraction.Validators;
 

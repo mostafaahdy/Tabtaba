@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.RateLimiting;
@@ -9,12 +10,14 @@ using System.Text;
 using System.Threading.RateLimiting;
 using Tabtaba.Domain.Contracts;
 using Tabtaba.Domain.Entities;
-using Tabtaba.Entities;
+using Tabtaba.Domain.Entities.Settings;
+using Tabtaba.Domain.Entities.UserEntity;
 using Tabtaba.Persistence.Repositories;
 using Tabtaba.Presentation.Controllers;
 using Tabtaba.Presentation.Middlewares;
 using Tabtaba.Services.Features.EducationServices;
 using Tabtaba.Services.Services;
+using Tabtaba.ServicesAbstraction;
 using Tabtaba.ServicesAbstraction.Interfaces;
 using Tabtaba.ServicesAbstraction.Validators;
 using Tabtba.Persistence.Data.DbContexts;
@@ -31,6 +34,8 @@ builder.Host.UseSerilog((ctx, config) =>
             rollingInterval: RollingInterval.Day,
             retainedFileCountLimit: 30);
 });
+//DeepSeek Ai Model Chatbot
+builder.Services.Configure<DeepSeekSettings>(builder.Configuration.GetSection("DeepSeekSettings"));
 
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
@@ -42,7 +47,9 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 });
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+
 builder.Services.AddScoped<IEmailService, EmailService>();
+builder.Services.AddHttpClient<IChatbotService,ChatbotService>();
 
 builder.Services.AddIdentity<User, IdentityRole>(options =>
 {
@@ -107,6 +114,7 @@ builder.Services.AddMediatR(cfg =>
 // FluentValidation
 builder.Services.AddValidatorsFromAssembly(
     typeof(EducationValidator).Assembly);
+
 
 //  CORS
 builder.Services.AddCors(options =>

@@ -155,7 +155,7 @@ namespace Tabtaba.Persistence.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Tabtaba.Domain.Entities.AuditLog", b =>
+            modelBuilder.Entity("Tabtaba.Domain.Entities.BaymentgatewayEntity.AuditLog", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -192,7 +192,7 @@ namespace Tabtaba.Persistence.Migrations
                     b.ToTable("AuditLogs");
                 });
 
-            modelBuilder.Entity("Tabtaba.Domain.Entities.Payment", b =>
+            modelBuilder.Entity("Tabtaba.Domain.Entities.BaymentgatewayEntity.Payment", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -239,7 +239,7 @@ namespace Tabtaba.Persistence.Migrations
                     b.ToTable("Payments");
                 });
 
-            modelBuilder.Entity("Tabtaba.Domain.Entities.PaymentCard", b =>
+            modelBuilder.Entity("Tabtaba.Domain.Entities.BaymentgatewayEntity.PaymentCard", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -274,38 +274,7 @@ namespace Tabtaba.Persistence.Migrations
                     b.ToTable("PaymentCards");
                 });
 
-            modelBuilder.Entity("Tabtaba.Domain.Entities.Plan", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("BillingCycle")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Plans");
-                });
-
-            modelBuilder.Entity("Tabtaba.Domain.Entities.Subscription", b =>
+            modelBuilder.Entity("Tabtaba.Domain.Entities.BaymentgatewayEntity.Subscription", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -345,11 +314,362 @@ namespace Tabtaba.Persistence.Migrations
                     b.ToTable("Subscriptions");
                 });
 
-            modelBuilder.Entity("Tabtaba.Domain.Entities.Therapist", b =>
+            modelBuilder.Entity("Tabtaba.Domain.Entities.TherapistEntity.CommonCondition", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CommonConditions");
+                });
+
+            modelBuilder.Entity("Tabtaba.Domain.Entities.TherapistEntity.CommonConditions_Diagnosis", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CommonConditionId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CommonCondition_ID")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ConditionId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DiagnosisId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CommonConditionId");
+
+                    b.HasIndex("ConditionId");
+
+                    b.HasIndex("DiagnosisId");
+
+                    b.ToTable("CommonConditions_Diagnoses");
+                });
+
+            modelBuilder.Entity("Tabtaba.Domain.Entities.TherapistEntity.Condition", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Condition_Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Conditions");
+                });
+
+            modelBuilder.Entity("Tabtaba.Domain.Entities.TherapistEntity.Diagnosis", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ConditionId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Diagnosis_Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Diagnosis_Details")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("DoctorId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MedicalRecordId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RecordID")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ConditionId");
+
+                    b.HasIndex("DoctorId");
+
+                    b.HasIndex("MedicalRecordId");
+
+                    b.ToTable("Diagnoses");
+                });
+
+            modelBuilder.Entity("Tabtaba.Domain.Entities.TherapistEntity.Doctor", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Availability_Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("License_Number")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Rating")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<string>("Specialization")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Years_Experience")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Doctors");
+                });
+
+            modelBuilder.Entity("Tabtaba.Domain.Entities.TherapistEntity.MedicalRecord", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("Creation_Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("Last_Updated_Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("PatientId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PatientId")
+                        .IsUnique();
+
+                    b.ToTable("MedicalRecords");
+                });
+
+            modelBuilder.Entity("Tabtaba.Domain.Entities.TherapistEntity.Message", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsRead")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ReceiverId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("SenderId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("SentAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ReceiverId");
+
+                    b.HasIndex("SenderId");
+
+                    b.ToTable("Messages");
+                });
+
+            modelBuilder.Entity("Tabtaba.Domain.Entities.TherapistEntity.Plan", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("BillingCycle")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Plans");
+                });
+
+            modelBuilder.Entity("Tabtaba.Domain.Entities.TherapistEntity.ProgressTracker", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<int>("Anxiety_Level")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Date_Recorded")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Mood_Score")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PatientId")
+                        .HasColumnType("int");
+
+                    b.Property<double>("Sleep_Hours")
+                        .HasColumnType("float");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("PatientId");
+
+                    b.ToTable("ProgressTrackers");
+                });
+
+            modelBuilder.Entity("Tabtaba.Domain.Entities.TherapistEntity.Review", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AppointmentId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DoctorId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PatientId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Patient_Notes")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Rating_Score")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Review_Text")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("TherapistId")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("TherapistId1")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppointmentId");
+
+                    b.HasIndex("DoctorId");
+
+                    b.HasIndex("PatientId");
+
+                    b.HasIndex("TherapistId1");
+
+                    b.ToTable("Reviews");
+                });
+
+            modelBuilder.Entity("Tabtaba.Domain.Entities.TherapistEntity.SessionNote", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AppointmentId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("Date_Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("Last_Updated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Notes")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppointmentId");
+
+                    b.ToTable("SessionNotes");
+                });
+
+            modelBuilder.Entity("Tabtaba.Domain.Entities.TherapistEntity.Therapist", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("AboutDescription")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Bio")
                         .HasColumnType("nvarchar(max)");
@@ -377,6 +697,10 @@ namespace Tabtaba.Persistence.Migrations
 
                     b.Property<int?>("Gender")
                         .HasColumnType("int");
+
+                    b.Property<string>("IntroAudioUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MobileNumber")
                         .HasColumnType("nvarchar(max)");
@@ -416,7 +740,7 @@ namespace Tabtaba.Persistence.Migrations
                     b.ToTable("Therapists");
                 });
 
-            modelBuilder.Entity("Tabtaba.Domain.Entities.TherapistAvailability", b =>
+            modelBuilder.Entity("Tabtaba.Domain.Entities.TherapistEntity.TherapistAvailability", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -456,7 +780,7 @@ namespace Tabtaba.Persistence.Migrations
                     b.ToTable("TherapistAvailabilities");
                 });
 
-            modelBuilder.Entity("Tabtaba.Domain.Entities.TherapistDocument", b =>
+            modelBuilder.Entity("Tabtaba.Domain.Entities.TherapistEntity.TherapistDocument", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -494,7 +818,7 @@ namespace Tabtaba.Persistence.Migrations
                     b.ToTable("TherapistDocuments");
                 });
 
-            modelBuilder.Entity("Tabtaba.Domain.Entities.TherapistEducation", b =>
+            modelBuilder.Entity("Tabtaba.Domain.Entities.TherapistEntity.TherapistEducation", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -524,7 +848,7 @@ namespace Tabtaba.Persistence.Migrations
                     b.ToTable("TherapistEducations");
                 });
 
-            modelBuilder.Entity("Tabtaba.Domain.Entities.TherapistLanguage", b =>
+            modelBuilder.Entity("Tabtaba.Domain.Entities.TherapistEntity.TherapistLanguage", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -543,7 +867,7 @@ namespace Tabtaba.Persistence.Migrations
                     b.ToTable("TherapistLanguages");
                 });
 
-            modelBuilder.Entity("Tabtaba.Domain.Entities.TherapistProfessionalInfo", b =>
+            modelBuilder.Entity("Tabtaba.Domain.Entities.TherapistEntity.TherapistProfessionalInfo", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -580,39 +904,7 @@ namespace Tabtaba.Persistence.Migrations
                     b.ToTable("TherapistProfessionalInfos");
                 });
 
-            modelBuilder.Entity("Tabtaba.Domain.Entities.Withdrawal", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("DoctorId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("PaymentMethod")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DoctorId");
-
-                    b.ToTable("Withdrawals");
-                });
-
-            modelBuilder.Entity("Tabtaba.Entities.Achievement", b =>
+            modelBuilder.Entity("Tabtaba.Domain.Entities.UserEntity.Achievement", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -645,7 +937,7 @@ namespace Tabtaba.Persistence.Migrations
                     b.ToTable("Achievements");
                 });
 
-            modelBuilder.Entity("Tabtaba.Entities.Appointment", b =>
+            modelBuilder.Entity("Tabtaba.Domain.Entities.UserEntity.Appointment", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -659,8 +951,8 @@ namespace Tabtaba.Persistence.Migrations
                     b.Property<int>("DoctorId")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("Duration_Minutes")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<int>("Duration_Minutes")
+                        .HasColumnType("int");
 
                     b.Property<bool>("IsPaid")
                         .HasColumnType("bit");
@@ -683,6 +975,12 @@ namespace Tabtaba.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Zoom_Meeting_Id")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Zoom_Meeting_Url")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("DoctorId");
@@ -692,7 +990,7 @@ namespace Tabtaba.Persistence.Migrations
                     b.ToTable("Appointments");
                 });
 
-            modelBuilder.Entity("Tabtaba.Entities.CommonCondition", b =>
+            modelBuilder.Entity("Tabtaba.Domain.Entities.UserEntity.ChatLog", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -700,20 +998,44 @@ namespace Tabtaba.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Description")
-                        .IsRequired()
+                    b.Property<string>("AudioPath")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Title")
-                        .IsRequired()
+                    b.Property<string>("BotResponse")
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("ImagePath")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("MessageType")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<int>("PatientId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PatientId1")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserMessage")
+                        .HasMaxLength(4000)
+                        .HasColumnType("nvarchar(4000)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("CommonConditions");
+                    b.HasIndex("PatientId");
+
+                    b.HasIndex("PatientId1");
+
+                    b.ToTable("ChatLogs");
                 });
 
-            modelBuilder.Entity("Tabtaba.Entities.CommonConditions_Diagnosis", b =>
+            modelBuilder.Entity("Tabtaba.Domain.Entities.UserEntity.Comment", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -721,51 +1043,31 @@ namespace Tabtaba.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("CommonConditionId")
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("KnowledgeId")
                         .HasColumnType("int");
 
-                    b.Property<int>("CommonCondition_ID")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("ConditionId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("DiagnosisId")
-                        .HasColumnType("int");
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CommonConditionId");
+                    b.HasIndex("KnowledgeId");
 
-                    b.HasIndex("ConditionId");
+                    b.HasIndex("UserId");
 
-                    b.HasIndex("DiagnosisId");
-
-                    b.ToTable("CommonConditions_Diagnoses");
+                    b.ToTable("KnowledgeComments");
                 });
 
-            modelBuilder.Entity("Tabtaba.Entities.Condition", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Condition_Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Conditions");
-                });
-
-            modelBuilder.Entity("Tabtaba.Entities.DailyMessages", b =>
+            modelBuilder.Entity("Tabtaba.Domain.Entities.UserEntity.DailyMessages", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -795,80 +1097,7 @@ namespace Tabtaba.Persistence.Migrations
                     b.ToTable("DailyMessages");
                 });
 
-            modelBuilder.Entity("Tabtaba.Entities.Diagnosis", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("ConditionId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("Diagnosis_Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Diagnosis_Details")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("DoctorId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MedicalRecordId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("RecordID")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ConditionId");
-
-                    b.HasIndex("DoctorId");
-
-                    b.HasIndex("MedicalRecordId");
-
-                    b.ToTable("Diagnoses");
-                });
-
-            modelBuilder.Entity("Tabtaba.Entities.Doctor", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Availability_Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("License_Number")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("Rating")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("Specialization")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Years_Experience")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Doctors");
-                });
-
-            modelBuilder.Entity("Tabtaba.Entities.Journal", b =>
+            modelBuilder.Entity("Tabtaba.Domain.Entities.UserEntity.Journal", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -897,7 +1126,7 @@ namespace Tabtaba.Persistence.Migrations
                     b.ToTable("Journals");
                 });
 
-            modelBuilder.Entity("Tabtaba.Entities.KidsZone", b =>
+            modelBuilder.Entity("Tabtaba.Domain.Entities.UserEntity.KidsZone", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -932,98 +1161,149 @@ namespace Tabtaba.Persistence.Migrations
                     b.ToTable("KidsZones");
                 });
 
-            modelBuilder.Entity("Tabtaba.Entities.KnowledgeZone", b =>
+            modelBuilder.Entity("Tabtaba.Domain.Entities.UserEntity.KnowledgeLibrary", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Category")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ContentType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Media_Type")
-                        .IsRequired()
+                    b.Property<int?>("DoctorId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("ReadTimeMinutes")
+                        .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("VideoUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("ViewsCount")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DoctorId");
+
+                    b.ToTable("KnowledgeLibraries");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Category = "ADHD",
+                            ContentType = "Article",
+                            CreatedAt = new DateTime(2026, 5, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "ADHD is not just about focus",
+                            ReadTimeMinutes = 0,
+                            Title = "Understanding ADHD",
+                            ViewsCount = 0L
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Category = "Autism",
+                            ContentType = "Article",
+                            CreatedAt = new DateTime(2026, 5, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Autism is a spectrum of strengths",
+                            ReadTimeMinutes = 0,
+                            Title = "Living with Autism",
+                            ViewsCount = 0L
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Category = "OCD",
+                            ContentType = "Article",
+                            CreatedAt = new DateTime(2026, 5, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Obsessive-Compulsive Disorder (OCD) is more than just a need for cleanliness. It is a mental health condition characterized by intrusive thoughts (obsessions) and repetitive behaviors (compulsions) that can significantly impact daily life.",
+                            ReadTimeMinutes = 0,
+                            Title = "Understanding OCD",
+                            ViewsCount = 0L
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Category = "Alzheimer",
+                            ContentType = "Video",
+                            CreatedAt = new DateTime(2026, 5, 14, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Alzheimer's is a progressive brain disorder that affects memory, thinking, and behavior. Early detection and providing a supportive environment are crucial steps in managing the journey for both patients and their families.",
+                            ReadTimeMinutes = 0,
+                            Title = "A Guide to Alzheimer's",
+                            ViewsCount = 0L
+                        });
+                });
+
+            modelBuilder.Entity("Tabtaba.Domain.Entities.UserEntity.KnowledgeLike", b =>
+                {
                     b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("KnowledgeId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("LikedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("UserId", "KnowledgeId");
+
+                    b.HasIndex("KnowledgeId");
+
+                    b.ToTable("KnowledgeLikes");
+                });
+
+            modelBuilder.Entity("Tabtaba.Domain.Entities.UserEntity.MoodLog", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Note")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PatientId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("KnowledgeZones");
-                });
-
-            modelBuilder.Entity("Tabtaba.Entities.MedicalRecord", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("Creation_Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("Last_Updated_Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("PatientId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PatientId")
-                        .IsUnique();
-
-                    b.ToTable("MedicalRecords");
-                });
-
-            modelBuilder.Entity("Tabtaba.Entities.Message", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Content")
+                    b.Property<string>("Status")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("IsRead")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("ReceiverId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("SenderId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("SentAt")
-                        .HasColumnType("datetime2");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("ReceiverId");
+                    b.HasIndex("PatientId");
 
-                    b.HasIndex("SenderId");
-
-                    b.ToTable("Messages");
+                    b.ToTable("MoodLogs");
                 });
 
-            modelBuilder.Entity("Tabtaba.Entities.Patient", b =>
+            modelBuilder.Entity("Tabtaba.Domain.Entities.UserEntity.Patient", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1035,8 +1315,18 @@ namespace Tabtaba.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("DarkMode")
+                        .HasColumnType("bit");
+
                     b.Property<DateTime>("Date_Of_Birth")
                         .HasColumnType("datetime2");
+
+                    b.Property<bool>("EnableNotifications")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Language")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Marital_Status")
                         .IsRequired()
@@ -1045,6 +1335,33 @@ namespace Tabtaba.Persistence.Migrations
                     b.Property<string>("Medical_History_Summary")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("MoodTrackingReminders")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("MoodTrackingUpdates")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("NewContentAlerts")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("PersonalizedTips")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("ReceiveEmails")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("ReceiveNotifications")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("RemainingSessions")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("SessionReminders")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("TherapistMessages")
+                        .HasColumnType("bit");
 
                     b.Property<string>("UserId")
                         .IsRequired()
@@ -1058,7 +1375,7 @@ namespace Tabtaba.Persistence.Migrations
                     b.ToTable("Patients");
                 });
 
-            modelBuilder.Entity("Tabtaba.Entities.Patient_Appointment_Doctor", b =>
+            modelBuilder.Entity("Tabtaba.Domain.Entities.UserEntity.Patient_Appointment_Doctor", b =>
                 {
                     b.Property<int>("PatientId")
                         .HasColumnType("int");
@@ -1081,67 +1398,7 @@ namespace Tabtaba.Persistence.Migrations
                     b.ToTable("Patient_Appointment_Doctors");
                 });
 
-            modelBuilder.Entity("Tabtaba.Entities.ProgressTracker", b =>
-                {
-                    b.Property<int>("ID")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
-
-                    b.Property<int>("Anxiety_Level")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("Date_Recorded")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Mood_Score")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PatientId")
-                        .HasColumnType("int");
-
-                    b.Property<double>("Sleep_Hours")
-                        .HasColumnType("float");
-
-                    b.HasKey("ID");
-
-                    b.HasIndex("PatientId");
-
-                    b.ToTable("ProgressTrackers");
-                });
-
-            modelBuilder.Entity("Tabtaba.Entities.Review", b =>
-                {
-                    b.Property<int>("id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
-
-                    b.Property<int>("DoctorId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("PatientId")
-                        .HasColumnType("int");
-
-                    b.Property<decimal>("Rating_Score")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<string>("Review_Text")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("id");
-
-                    b.HasIndex("DoctorId");
-
-                    b.HasIndex("PatientId");
-
-                    b.ToTable("Reviews");
-                });
-
-            modelBuilder.Entity("Tabtaba.Entities.SessionNote", b =>
+            modelBuilder.Entity("Tabtaba.Domain.Entities.UserEntity.RelaxContent", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -1149,27 +1406,54 @@ namespace Tabtaba.Persistence.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("AppointmentId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("Date_Created")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("Last_Updated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Notes")
+                    b.Property<string>("Category")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("DurationInMinutes")
+                        .HasColumnType("int");
+
+                    b.Property<string>("MediaUrl")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("AppointmentId");
-
-                    b.ToTable("SessionNotes");
+                    b.ToTable("relaxContents");
                 });
 
-            modelBuilder.Entity("Tabtaba.Entities.User", b =>
+            modelBuilder.Entity("Tabtaba.Domain.Entities.UserEntity.RelaxLog", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CompletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("PatientId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("RelaxContentId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PatientId");
+
+                    b.HasIndex("RelaxContentId");
+
+                    b.ToTable("relaxLogs");
+                });
+
+            modelBuilder.Entity("Tabtaba.Domain.Entities.UserEntity.User", b =>
                 {
                     b.Property<string>("Id")
                         .HasColumnType("nvarchar(450)");
@@ -1180,6 +1464,9 @@ namespace Tabtaba.Persistence.Migrations
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DateOfBirth")
+                        .HasColumnType("datetime2");
 
                     b.Property<int>("DoctorId")
                         .HasColumnType("int");
@@ -1202,6 +1489,9 @@ namespace Tabtaba.Persistence.Migrations
 
                     b.Property<string>("Hashed_Password")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageUrl")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("L_Name")
@@ -1271,6 +1561,92 @@ namespace Tabtaba.Persistence.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("Tabtaba.Domain.Entities.UserEntity.UserSavedContent", b =>
+                {
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("KnowledgeLibraryId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("KnowledgeLibraryId1")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PatientId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("SavedAt")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("UserId", "KnowledgeLibraryId");
+
+                    b.HasIndex("KnowledgeLibraryId");
+
+                    b.HasIndex("KnowledgeLibraryId1");
+
+                    b.ToTable("UserSavedContents");
+                });
+
+            modelBuilder.Entity("Tabtaba.Domain.Entities.UserEntity.VideoChapter", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("KnowledgeId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Timestamp")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("KnowledgeId");
+
+                    b.ToTable("VideoChapters");
+                });
+
+            modelBuilder.Entity("Tabtaba.Domain.Entities.Withdrawal", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DoctorId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PaymentMethod")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DoctorId");
+
+                    b.ToTable("Withdrawals");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -1282,7 +1658,7 @@ namespace Tabtaba.Persistence.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("Tabtaba.Entities.User", null)
+                    b.HasOne("Tabtaba.Domain.Entities.UserEntity.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1291,7 +1667,7 @@ namespace Tabtaba.Persistence.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("Tabtaba.Entities.User", null)
+                    b.HasOne("Tabtaba.Domain.Entities.UserEntity.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1306,7 +1682,7 @@ namespace Tabtaba.Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Tabtaba.Entities.User", null)
+                    b.HasOne("Tabtaba.Domain.Entities.UserEntity.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1315,22 +1691,22 @@ namespace Tabtaba.Persistence.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("Tabtaba.Entities.User", null)
+                    b.HasOne("Tabtaba.Domain.Entities.UserEntity.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Tabtaba.Domain.Entities.Payment", b =>
+            modelBuilder.Entity("Tabtaba.Domain.Entities.BaymentgatewayEntity.Payment", b =>
                 {
-                    b.HasOne("Tabtaba.Entities.Appointment", "Appointment")
+                    b.HasOne("Tabtaba.Domain.Entities.UserEntity.Appointment", "Appointment")
                         .WithMany()
                         .HasForeignKey("AppointmentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Tabtaba.Entities.Patient", "Patient")
+                    b.HasOne("Tabtaba.Domain.Entities.UserEntity.Patient", "Patient")
                         .WithMany()
                         .HasForeignKey("PatientId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1341,15 +1717,15 @@ namespace Tabtaba.Persistence.Migrations
                     b.Navigation("Patient");
                 });
 
-            modelBuilder.Entity("Tabtaba.Domain.Entities.Subscription", b =>
+            modelBuilder.Entity("Tabtaba.Domain.Entities.BaymentgatewayEntity.Subscription", b =>
                 {
-                    b.HasOne("Tabtaba.Entities.Patient", "Patient")
+                    b.HasOne("Tabtaba.Domain.Entities.UserEntity.Patient", "Patient")
                         .WithMany()
                         .HasForeignKey("PatientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Tabtaba.Domain.Entities.Plan", "Plan")
+                    b.HasOne("Tabtaba.Domain.Entities.TherapistEntity.Plan", "Plan")
                         .WithMany("Subscriptions")
                         .HasForeignKey("PlanId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1360,132 +1736,19 @@ namespace Tabtaba.Persistence.Migrations
                     b.Navigation("Plan");
                 });
 
-            modelBuilder.Entity("Tabtaba.Domain.Entities.Therapist", b =>
+            modelBuilder.Entity("Tabtaba.Domain.Entities.TherapistEntity.CommonConditions_Diagnosis", b =>
                 {
-                    b.HasOne("Tabtaba.Entities.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId1")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Tabtaba.Domain.Entities.TherapistAvailability", b =>
-                {
-                    b.HasOne("Tabtaba.Domain.Entities.Therapist", "Therapist")
-                        .WithMany("Availabilities")
-                        .HasForeignKey("TherapistId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Therapist");
-                });
-
-            modelBuilder.Entity("Tabtaba.Domain.Entities.TherapistDocument", b =>
-                {
-                    b.HasOne("Tabtaba.Domain.Entities.Therapist", "Therapist")
-                        .WithMany("Documents")
-                        .HasForeignKey("TherapistId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Therapist");
-                });
-
-            modelBuilder.Entity("Tabtaba.Domain.Entities.TherapistEducation", b =>
-                {
-                    b.HasOne("Tabtaba.Domain.Entities.Therapist", "Therapist")
-                        .WithMany("Educations")
-                        .HasForeignKey("TherapistId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Therapist");
-                });
-
-            modelBuilder.Entity("Tabtaba.Domain.Entities.TherapistLanguage", b =>
-                {
-                    b.HasOne("Tabtaba.Domain.Entities.Therapist", "Therapist")
-                        .WithMany("Languages")
-                        .HasForeignKey("TherapistId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Therapist");
-                });
-
-            modelBuilder.Entity("Tabtaba.Domain.Entities.TherapistProfessionalInfo", b =>
-                {
-                    b.HasOne("Tabtaba.Domain.Entities.Therapist", "Therapist")
-                        .WithOne("ProfessionalInfo")
-                        .HasForeignKey("Tabtaba.Domain.Entities.TherapistProfessionalInfo", "TherapistId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Therapist");
-                });
-
-            modelBuilder.Entity("Tabtaba.Domain.Entities.Withdrawal", b =>
-                {
-                    b.HasOne("Tabtaba.Entities.Doctor", "Doctor")
-                        .WithMany()
-                        .HasForeignKey("DoctorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Doctor");
-                });
-
-            modelBuilder.Entity("Tabtaba.Entities.Achievement", b =>
-                {
-                    b.HasOne("Tabtaba.Entities.Patient", null)
-                        .WithMany()
-                        .HasForeignKey("PatientId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("Tabtaba.Entities.Patient", "Patient")
-                        .WithMany("Achievements")
-                        .HasForeignKey("PatientId1")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Patient");
-                });
-
-            modelBuilder.Entity("Tabtaba.Entities.Appointment", b =>
-                {
-                    b.HasOne("Tabtaba.Entities.Doctor", "Doctor")
-                        .WithMany("Appointments")
-                        .HasForeignKey("DoctorId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("Tabtaba.Entities.Patient", "Patient")
-                        .WithMany("Appointments")
-                        .HasForeignKey("PatientId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Doctor");
-
-                    b.Navigation("Patient");
-                });
-
-            modelBuilder.Entity("Tabtaba.Entities.CommonConditions_Diagnosis", b =>
-                {
-                    b.HasOne("Tabtaba.Entities.CommonCondition", "CommonCondition")
+                    b.HasOne("Tabtaba.Domain.Entities.TherapistEntity.CommonCondition", "CommonCondition")
                         .WithMany("CommonConditions_Diagnoses")
                         .HasForeignKey("CommonConditionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Tabtaba.Entities.Condition", null)
+                    b.HasOne("Tabtaba.Domain.Entities.TherapistEntity.Condition", null)
                         .WithMany("CommonConditions_Diagnoses")
                         .HasForeignKey("ConditionId");
 
-                    b.HasOne("Tabtaba.Entities.Diagnosis", "Diagnosis")
+                    b.HasOne("Tabtaba.Domain.Entities.TherapistEntity.Diagnosis", "Diagnosis")
                         .WithMany()
                         .HasForeignKey("DiagnosisId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1496,32 +1759,21 @@ namespace Tabtaba.Persistence.Migrations
                     b.Navigation("Diagnosis");
                 });
 
-            modelBuilder.Entity("Tabtaba.Entities.DailyMessages", b =>
+            modelBuilder.Entity("Tabtaba.Domain.Entities.TherapistEntity.Diagnosis", b =>
                 {
-                    b.HasOne("Tabtaba.Entities.User", "User")
-                        .WithMany("DailyMessages")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Tabtaba.Entities.Diagnosis", b =>
-                {
-                    b.HasOne("Tabtaba.Entities.Condition", "Condition")
+                    b.HasOne("Tabtaba.Domain.Entities.TherapistEntity.Condition", "Condition")
                         .WithMany("Diagnoses")
                         .HasForeignKey("ConditionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Tabtaba.Entities.Doctor", "Doctor")
+                    b.HasOne("Tabtaba.Domain.Entities.TherapistEntity.Doctor", "Doctor")
                         .WithMany("Diagnoses")
                         .HasForeignKey("DoctorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Tabtaba.Entities.MedicalRecord", "MedicalRecord")
+                    b.HasOne("Tabtaba.Domain.Entities.TherapistEntity.MedicalRecord", "MedicalRecord")
                         .WithMany("Diagnoses")
                         .HasForeignKey("MedicalRecordId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1534,59 +1786,26 @@ namespace Tabtaba.Persistence.Migrations
                     b.Navigation("MedicalRecord");
                 });
 
-            modelBuilder.Entity("Tabtaba.Entities.Journal", b =>
+            modelBuilder.Entity("Tabtaba.Domain.Entities.TherapistEntity.MedicalRecord", b =>
                 {
-                    b.HasOne("Tabtaba.Entities.Patient", "Patient")
-                        .WithMany("Journals")
-                        .HasForeignKey("PatientId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Patient");
-                });
-
-            modelBuilder.Entity("Tabtaba.Entities.KidsZone", b =>
-                {
-                    b.HasOne("Tabtaba.Entities.User", "User")
-                        .WithMany("KidsZones")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Tabtaba.Entities.KnowledgeZone", b =>
-                {
-                    b.HasOne("Tabtaba.Entities.User", "User")
-                        .WithMany("KnowledgeZones")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Tabtaba.Entities.MedicalRecord", b =>
-                {
-                    b.HasOne("Tabtaba.Entities.Patient", "Patient")
+                    b.HasOne("Tabtaba.Domain.Entities.UserEntity.Patient", "Patient")
                         .WithOne("MedicalRecord")
-                        .HasForeignKey("Tabtaba.Entities.MedicalRecord", "PatientId")
+                        .HasForeignKey("Tabtaba.Domain.Entities.TherapistEntity.MedicalRecord", "PatientId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Patient");
                 });
 
-            modelBuilder.Entity("Tabtaba.Entities.Message", b =>
+            modelBuilder.Entity("Tabtaba.Domain.Entities.TherapistEntity.Message", b =>
                 {
-                    b.HasOne("Tabtaba.Entities.User", "Receiver")
+                    b.HasOne("Tabtaba.Domain.Entities.UserEntity.User", "Receiver")
                         .WithMany()
                         .HasForeignKey("ReceiverId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Tabtaba.Entities.User", "Sender")
+                    b.HasOne("Tabtaba.Domain.Entities.UserEntity.User", "Sender")
                         .WithMany()
                         .HasForeignKey("SenderId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -1597,47 +1816,9 @@ namespace Tabtaba.Persistence.Migrations
                     b.Navigation("Sender");
                 });
 
-            modelBuilder.Entity("Tabtaba.Entities.Patient", b =>
+            modelBuilder.Entity("Tabtaba.Domain.Entities.TherapistEntity.ProgressTracker", b =>
                 {
-                    b.HasOne("Tabtaba.Entities.User", "User")
-                        .WithOne("Patient")
-                        .HasForeignKey("Tabtaba.Entities.Patient", "UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Tabtaba.Entities.Patient_Appointment_Doctor", b =>
-                {
-                    b.HasOne("Tabtaba.Entities.Appointment", "Appointment")
-                        .WithMany()
-                        .HasForeignKey("AppointmentId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Tabtaba.Entities.Doctor", "Doctor")
-                        .WithMany()
-                        .HasForeignKey("DoctorId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("Tabtaba.Entities.Patient", "Patient")
-                        .WithMany()
-                        .HasForeignKey("PatientId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Appointment");
-
-                    b.Navigation("Doctor");
-
-                    b.Navigation("Patient");
-                });
-
-            modelBuilder.Entity("Tabtaba.Entities.ProgressTracker", b =>
-                {
-                    b.HasOne("Tabtaba.Entities.Patient", "Patient")
+                    b.HasOne("Tabtaba.Domain.Entities.UserEntity.Patient", "Patient")
                         .WithMany("ProgressTrackers")
                         .HasForeignKey("PatientId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1646,28 +1827,44 @@ namespace Tabtaba.Persistence.Migrations
                     b.Navigation("Patient");
                 });
 
-            modelBuilder.Entity("Tabtaba.Entities.Review", b =>
+            modelBuilder.Entity("Tabtaba.Domain.Entities.TherapistEntity.Review", b =>
                 {
-                    b.HasOne("Tabtaba.Entities.Doctor", "Doctor")
+                    b.HasOne("Tabtaba.Domain.Entities.UserEntity.Appointment", "Appointment")
+                        .WithMany()
+                        .HasForeignKey("AppointmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Tabtaba.Domain.Entities.TherapistEntity.Doctor", "Doctor")
                         .WithMany("Reviews")
                         .HasForeignKey("DoctorId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Tabtaba.Entities.Patient", "Patient")
+                    b.HasOne("Tabtaba.Domain.Entities.UserEntity.Patient", "Patient")
                         .WithMany("Reviews")
                         .HasForeignKey("PatientId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Tabtaba.Domain.Entities.TherapistEntity.Therapist", "Therapist")
+                        .WithMany()
+                        .HasForeignKey("TherapistId1")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Appointment");
+
                     b.Navigation("Doctor");
 
                     b.Navigation("Patient");
+
+                    b.Navigation("Therapist");
                 });
 
-            modelBuilder.Entity("Tabtaba.Entities.SessionNote", b =>
+            modelBuilder.Entity("Tabtaba.Domain.Entities.TherapistEntity.SessionNote", b =>
                 {
-                    b.HasOne("Tabtaba.Entities.Appointment", "Appointment")
+                    b.HasOne("Tabtaba.Domain.Entities.UserEntity.Appointment", "Appointment")
                         .WithMany()
                         .HasForeignKey("AppointmentId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1676,23 +1873,352 @@ namespace Tabtaba.Persistence.Migrations
                     b.Navigation("Appointment");
                 });
 
-            modelBuilder.Entity("Tabtaba.Entities.User", b =>
+            modelBuilder.Entity("Tabtaba.Domain.Entities.TherapistEntity.Therapist", b =>
                 {
-                    b.HasOne("Tabtaba.Entities.Doctor", "Doctor")
+                    b.HasOne("Tabtaba.Domain.Entities.UserEntity.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId1")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Tabtaba.Domain.Entities.TherapistEntity.TherapistAvailability", b =>
+                {
+                    b.HasOne("Tabtaba.Domain.Entities.TherapistEntity.Therapist", "Therapist")
+                        .WithMany("Availabilities")
+                        .HasForeignKey("TherapistId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Therapist");
+                });
+
+            modelBuilder.Entity("Tabtaba.Domain.Entities.TherapistEntity.TherapistDocument", b =>
+                {
+                    b.HasOne("Tabtaba.Domain.Entities.TherapistEntity.Therapist", "Therapist")
+                        .WithMany("Documents")
+                        .HasForeignKey("TherapistId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Therapist");
+                });
+
+            modelBuilder.Entity("Tabtaba.Domain.Entities.TherapistEntity.TherapistEducation", b =>
+                {
+                    b.HasOne("Tabtaba.Domain.Entities.TherapistEntity.Therapist", "Therapist")
+                        .WithMany("Educations")
+                        .HasForeignKey("TherapistId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Therapist");
+                });
+
+            modelBuilder.Entity("Tabtaba.Domain.Entities.TherapistEntity.TherapistLanguage", b =>
+                {
+                    b.HasOne("Tabtaba.Domain.Entities.TherapistEntity.Therapist", "Therapist")
+                        .WithMany("Languages")
+                        .HasForeignKey("TherapistId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Therapist");
+                });
+
+            modelBuilder.Entity("Tabtaba.Domain.Entities.TherapistEntity.TherapistProfessionalInfo", b =>
+                {
+                    b.HasOne("Tabtaba.Domain.Entities.TherapistEntity.Therapist", "Therapist")
+                        .WithOne("ProfessionalInfo")
+                        .HasForeignKey("Tabtaba.Domain.Entities.TherapistEntity.TherapistProfessionalInfo", "TherapistId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Therapist");
+                });
+
+            modelBuilder.Entity("Tabtaba.Domain.Entities.UserEntity.Achievement", b =>
+                {
+                    b.HasOne("Tabtaba.Domain.Entities.UserEntity.Patient", null)
+                        .WithMany()
+                        .HasForeignKey("PatientId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Tabtaba.Domain.Entities.UserEntity.Patient", "Patient")
+                        .WithMany("Achievements")
+                        .HasForeignKey("PatientId1")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Patient");
+                });
+
+            modelBuilder.Entity("Tabtaba.Domain.Entities.UserEntity.Appointment", b =>
+                {
+                    b.HasOne("Tabtaba.Domain.Entities.TherapistEntity.Doctor", "Doctor")
+                        .WithMany("Appointments")
+                        .HasForeignKey("DoctorId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Tabtaba.Domain.Entities.UserEntity.Patient", "Patient")
+                        .WithMany("Appointments")
+                        .HasForeignKey("PatientId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Doctor");
+
+                    b.Navigation("Patient");
+                });
+
+            modelBuilder.Entity("Tabtaba.Domain.Entities.UserEntity.ChatLog", b =>
+                {
+                    b.HasOne("Tabtaba.Domain.Entities.UserEntity.Patient", null)
+                        .WithMany()
+                        .HasForeignKey("PatientId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Tabtaba.Domain.Entities.UserEntity.Patient", "Patient")
+                        .WithMany()
+                        .HasForeignKey("PatientId1")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Patient");
+                });
+
+            modelBuilder.Entity("Tabtaba.Domain.Entities.UserEntity.Comment", b =>
+                {
+                    b.HasOne("Tabtaba.Domain.Entities.UserEntity.KnowledgeLibrary", "Knowledge")
+                        .WithMany("Comments")
+                        .HasForeignKey("KnowledgeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Tabtaba.Domain.Entities.UserEntity.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Knowledge");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Tabtaba.Domain.Entities.UserEntity.DailyMessages", b =>
+                {
+                    b.HasOne("Tabtaba.Domain.Entities.UserEntity.User", "User")
+                        .WithMany("DailyMessages")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Tabtaba.Domain.Entities.UserEntity.Journal", b =>
+                {
+                    b.HasOne("Tabtaba.Domain.Entities.UserEntity.Patient", "Patient")
+                        .WithMany("Journals")
+                        .HasForeignKey("PatientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Patient");
+                });
+
+            modelBuilder.Entity("Tabtaba.Domain.Entities.UserEntity.KidsZone", b =>
+                {
+                    b.HasOne("Tabtaba.Domain.Entities.UserEntity.User", "User")
+                        .WithMany("KidsZones")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Tabtaba.Domain.Entities.UserEntity.KnowledgeLibrary", b =>
+                {
+                    b.HasOne("Tabtaba.Domain.Entities.TherapistEntity.Doctor", "Doctor")
+                        .WithMany()
+                        .HasForeignKey("DoctorId");
+
+                    b.Navigation("Doctor");
+                });
+
+            modelBuilder.Entity("Tabtaba.Domain.Entities.UserEntity.KnowledgeLike", b =>
+                {
+                    b.HasOne("Tabtaba.Domain.Entities.UserEntity.KnowledgeLibrary", "Knowledge")
+                        .WithMany("Likes")
+                        .HasForeignKey("KnowledgeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Knowledge");
+                });
+
+            modelBuilder.Entity("Tabtaba.Domain.Entities.UserEntity.MoodLog", b =>
+                {
+                    b.HasOne("Tabtaba.Domain.Entities.UserEntity.User", "Patient")
+                        .WithMany()
+                        .HasForeignKey("PatientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Patient");
+                });
+
+            modelBuilder.Entity("Tabtaba.Domain.Entities.UserEntity.Patient", b =>
+                {
+                    b.HasOne("Tabtaba.Domain.Entities.UserEntity.User", "User")
+                        .WithOne("Patient")
+                        .HasForeignKey("Tabtaba.Domain.Entities.UserEntity.Patient", "UserId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Tabtaba.Domain.Entities.UserEntity.Patient_Appointment_Doctor", b =>
+                {
+                    b.HasOne("Tabtaba.Domain.Entities.UserEntity.Appointment", "Appointment")
+                        .WithMany()
+                        .HasForeignKey("AppointmentId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Tabtaba.Domain.Entities.TherapistEntity.Doctor", "Doctor")
+                        .WithMany()
+                        .HasForeignKey("DoctorId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("Tabtaba.Domain.Entities.UserEntity.Patient", "Patient")
+                        .WithMany()
+                        .HasForeignKey("PatientId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Appointment");
+
+                    b.Navigation("Doctor");
+
+                    b.Navigation("Patient");
+                });
+
+            modelBuilder.Entity("Tabtaba.Domain.Entities.UserEntity.RelaxLog", b =>
+                {
+                    b.HasOne("Tabtaba.Domain.Entities.UserEntity.User", null)
+                        .WithMany()
+                        .HasForeignKey("PatientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Tabtaba.Domain.Entities.UserEntity.RelaxContent", "RelaxContent")
+                        .WithMany("Logs")
+                        .HasForeignKey("RelaxContentId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("RelaxContent");
+                });
+
+            modelBuilder.Entity("Tabtaba.Domain.Entities.UserEntity.User", b =>
+                {
+                    b.HasOne("Tabtaba.Domain.Entities.TherapistEntity.Doctor", "Doctor")
                         .WithOne("User")
-                        .HasForeignKey("Tabtaba.Entities.User", "DoctorId")
+                        .HasForeignKey("Tabtaba.Domain.Entities.UserEntity.User", "DoctorId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Doctor");
                 });
 
-            modelBuilder.Entity("Tabtaba.Domain.Entities.Plan", b =>
+            modelBuilder.Entity("Tabtaba.Domain.Entities.UserEntity.UserSavedContent", b =>
+                {
+                    b.HasOne("Tabtaba.Domain.Entities.UserEntity.KnowledgeLibrary", "KnowledgeLibrary")
+                        .WithMany()
+                        .HasForeignKey("KnowledgeLibraryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Tabtaba.Domain.Entities.UserEntity.KnowledgeLibrary", null)
+                        .WithMany("SavedByUsers")
+                        .HasForeignKey("KnowledgeLibraryId1");
+
+                    b.HasOne("Tabtaba.Domain.Entities.UserEntity.User", null)
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("KnowledgeLibrary");
+                });
+
+            modelBuilder.Entity("Tabtaba.Domain.Entities.UserEntity.VideoChapter", b =>
+                {
+                    b.HasOne("Tabtaba.Domain.Entities.UserEntity.KnowledgeLibrary", "Knowledge")
+                        .WithMany("Chapters")
+                        .HasForeignKey("KnowledgeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Knowledge");
+                });
+
+            modelBuilder.Entity("Tabtaba.Domain.Entities.Withdrawal", b =>
+                {
+                    b.HasOne("Tabtaba.Domain.Entities.TherapistEntity.Doctor", "Doctor")
+                        .WithMany()
+                        .HasForeignKey("DoctorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Doctor");
+                });
+
+            modelBuilder.Entity("Tabtaba.Domain.Entities.TherapistEntity.CommonCondition", b =>
+                {
+                    b.Navigation("CommonConditions_Diagnoses");
+                });
+
+            modelBuilder.Entity("Tabtaba.Domain.Entities.TherapistEntity.Condition", b =>
+                {
+                    b.Navigation("CommonConditions_Diagnoses");
+
+                    b.Navigation("Diagnoses");
+                });
+
+            modelBuilder.Entity("Tabtaba.Domain.Entities.TherapistEntity.Doctor", b =>
+                {
+                    b.Navigation("Appointments");
+
+                    b.Navigation("Diagnoses");
+
+                    b.Navigation("Reviews");
+
+                    b.Navigation("User")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Tabtaba.Domain.Entities.TherapistEntity.MedicalRecord", b =>
+                {
+                    b.Navigation("Diagnoses");
+                });
+
+            modelBuilder.Entity("Tabtaba.Domain.Entities.TherapistEntity.Plan", b =>
                 {
                     b.Navigation("Subscriptions");
                 });
 
-            modelBuilder.Entity("Tabtaba.Domain.Entities.Therapist", b =>
+            modelBuilder.Entity("Tabtaba.Domain.Entities.TherapistEntity.Therapist", b =>
                 {
                     b.Navigation("Availabilities");
 
@@ -1705,36 +2231,18 @@ namespace Tabtaba.Persistence.Migrations
                     b.Navigation("ProfessionalInfo");
                 });
 
-            modelBuilder.Entity("Tabtaba.Entities.CommonCondition", b =>
+            modelBuilder.Entity("Tabtaba.Domain.Entities.UserEntity.KnowledgeLibrary", b =>
                 {
-                    b.Navigation("CommonConditions_Diagnoses");
+                    b.Navigation("Chapters");
+
+                    b.Navigation("Comments");
+
+                    b.Navigation("Likes");
+
+                    b.Navigation("SavedByUsers");
                 });
 
-            modelBuilder.Entity("Tabtaba.Entities.Condition", b =>
-                {
-                    b.Navigation("CommonConditions_Diagnoses");
-
-                    b.Navigation("Diagnoses");
-                });
-
-            modelBuilder.Entity("Tabtaba.Entities.Doctor", b =>
-                {
-                    b.Navigation("Appointments");
-
-                    b.Navigation("Diagnoses");
-
-                    b.Navigation("Reviews");
-
-                    b.Navigation("User")
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Tabtaba.Entities.MedicalRecord", b =>
-                {
-                    b.Navigation("Diagnoses");
-                });
-
-            modelBuilder.Entity("Tabtaba.Entities.Patient", b =>
+            modelBuilder.Entity("Tabtaba.Domain.Entities.UserEntity.Patient", b =>
                 {
                     b.Navigation("Achievements");
 
@@ -1750,13 +2258,16 @@ namespace Tabtaba.Persistence.Migrations
                     b.Navigation("Reviews");
                 });
 
-            modelBuilder.Entity("Tabtaba.Entities.User", b =>
+            modelBuilder.Entity("Tabtaba.Domain.Entities.UserEntity.RelaxContent", b =>
+                {
+                    b.Navigation("Logs");
+                });
+
+            modelBuilder.Entity("Tabtaba.Domain.Entities.UserEntity.User", b =>
                 {
                     b.Navigation("DailyMessages");
 
                     b.Navigation("KidsZones");
-
-                    b.Navigation("KnowledgeZones");
 
                     b.Navigation("Patient")
                         .IsRequired();

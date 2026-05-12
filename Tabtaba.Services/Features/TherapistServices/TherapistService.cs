@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
-using Tabtaba.Shared.DTOs.Therapist;
-using Tabtaba.Domain.Entities;
+using Tabtaba.Domain.Entities.TherapistEntity;
 using Tabtaba.Domain.Enums;
 using Tabtaba.ServicesAbstraction;
+using Tabtaba.Shared.Therapist;
 
 
 namespace Tabtaba.Services.Features.TherapistServices;

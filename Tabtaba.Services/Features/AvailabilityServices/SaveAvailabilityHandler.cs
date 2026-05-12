@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Tabtaba.Domain.Contracts;
-using Tabtaba.Domain.Entities;
+using Tabtaba.Domain.Entities.TherapistEntity;
 using Tabtaba.ServicesAbstraction.Commands;
 
 namespace Tabtaba.Services.Features.AvailabilityServices;

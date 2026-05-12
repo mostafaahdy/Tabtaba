@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MediatR;
-using Tabtaba.Shared.DTOs.Auth;
+using Tabtaba.Shared.Auth;
 
 namespace Tabtaba.ServicesAbstraction.Commands;
 

@@ -1,8 +1,11 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using System.Text.Json;
 using Tabtaba.Domain.Entities;
-using Tabtaba.Entities;
+using Tabtaba.Domain.Entities.BaymentgatewayEntity;
+using Tabtaba.Domain.Entities.TherapistEntity;
+using Tabtaba.Domain.Entities.UserEntity;
 using Tabtaba.Persistence.Data.Configurations;
 
 namespace Tabtba.Persistence.Data.DbContexts
@@ -16,23 +19,26 @@ namespace Tabtba.Persistence.Data.DbContexts
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppointmentConfig).Assembly);
-
-            modelBuilder.Entity<Message>()
-                .HasOne(m => m.Sender)
-                .WithMany()
-                .HasForeignKey(m => m.SenderId)
-                .OnDelete(DeleteBehavior.NoAction);
-
-            modelBuilder.Entity<Message>()
-                .HasOne(m => m.Receiver)
-                .WithMany()
-                .HasForeignKey(m => m.ReceiverId)
-                .OnDelete(DeleteBehavior.NoAction);
         }
-
         public override async Task<int> SaveChangesAsync(
             CancellationToken cancellationToken = default)
         {
+            var successfulPayments = ChangeTracker.Entries<Payment>()
+             .Where(e => (e.State == EntityState.Added || e.State == EntityState.Modified)
+                          && e.Property(p => p.Status).CurrentValue?.ToString() == "Success")
+             .Select(e => e.Entity)
+             .ToList();
+
+            foreach( var payment in successfulPayments )
+            {
+                var patient = Patients.Local.FirstOrDefault(p => p.Id == payment.PatientId)
+                  ?? await Patients.FindAsync(new object[] { payment.PatientId },cancellationToken);
+
+                if( patient != null )
+                {
+                    patient.RemainingSessions += 4;
+                }
+            }
             var auditLogs = new List<AuditLog>();
 
             foreach (var entry in ChangeTracker.Entries())
@@ -75,12 +81,12 @@ namespace Tabtba.Persistence.Data.DbContexts
         public DbSet<CommonConditions_Diagnosis> CommonConditions_Diagnoses { get; set; }
         public DbSet<Condition> Conditions { get; set; }
         public DbSet<TherapistAvailability> TherapistAvailabilities { get; set; }
+        public DbSet<KnowledgeLibrary> KnowledgeLibraries { get; set; }
         public DbSet<DailyMessages> DailyMessages { get; set; }
         public DbSet<Diagnosis> Diagnoses { get; set; }
         public DbSet<Doctor> Doctors { get; set; }
         public DbSet<Journal> Journals { get; set; }
         public DbSet<KidsZone> KidsZones { get; set; }
-        public DbSet<KnowledgeZone> KnowledgeZones { get; set; }
         public DbSet<MedicalRecord> MedicalRecords { get; set; }
         public DbSet<Patient> Patients { get; set; }
         public DbSet<Patient_Appointment_Doctor> Patient_Appointment_Doctors { get; set; }
@@ -99,6 +105,14 @@ namespace Tabtba.Persistence.Data.DbContexts
         public DbSet<PaymentCard> PaymentCards { get; set; }
         public DbSet<Payment> Payments { get; set; }
         public DbSet<AuditLog> AuditLogs { get; set; }
+        public DbSet<MoodLog> MoodLogs { get; set; }
+        public DbSet<UserSavedContent> UserSavedContents { get; set; }
+        public DbSet<Comment> KnowledgeComments { get; set; }
+        public DbSet<KnowledgeLike> KnowledgeLikes { get; set; }
+        public DbSet<VideoChapter> VideoChapters { get; set; }
+        public DbSet<RelaxContent> relaxContents { get; set; }
+        public DbSet<RelaxLog> relaxLogs { get; set; }
+        public DbSet<ChatLog> ChatLogs { get; set; }
         #endregion
     }
 }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MediatR;
-using Tabtaba.Shared.DTOs.Schedule;
+using Tabtaba.Shared.Schedule;
 
 namespace Tabtaba.ServicesAbstraction.Queries;
 

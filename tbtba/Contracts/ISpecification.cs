@@ -16,12 +16,13 @@ namespace Tabtaba.Domain.Contracts
 
         #region Includes
 
-        public ICollection<Expression<Func<TEntity,object>>> IncludeExpressions { get; }
+        public ICollection<Expression<Func<TEntity,object>>> IncludeExpressions { get; }       
+        public List<string> IncludeStrings { get; }
         #endregion
 
         #region Sorting 
 
-       public Expression<Func<TEntity,object>> OrderdBy {get;}
+        public Expression<Func<TEntity,object>> OrderdBy {get;}
        public Expression<Func<TEntity,object>> OrderdByDescending {get; }
 
         #endregion

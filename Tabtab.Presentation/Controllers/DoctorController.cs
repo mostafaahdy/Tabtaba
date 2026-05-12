@@ -8,10 +8,11 @@ using System.Runtime.InteropServices;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using Tabtaba.Entities;
+using Tabtaba.Domain.Entities.TherapistEntity;
 using Tabtaba.ServicesAbstraction.Commands;
 using Tabtaba.ServicesAbstraction.Queries;
-using Tabtaba.Shared.DTOs.Session;
+using Tabtaba.ServicesAbstraction.Queries.PatientQueries;
+using Tabtaba.Shared.Session;
 
 namespace Tabtaba.Presentation.Controllers;
 
@@ -77,6 +78,19 @@ public class DoctorController : ControllerBase
             return BadRequest(new { message = "Failed to save emotional status." });
 
         return Ok(new { message = "Emotional status saved successfully." });
+    }
+    [HttpGet("patient-report/{patientId}")]
+    public async Task<IActionResult> GetPatientReport(int patientId)
+    {
+        var result = await _mediator.Send(new GetDoctorReportQuery(patientId));
+        return Ok(result);
+    }
+    [HttpGet]
+    public async Task<ActionResult<List<GetDoctorDTO>>> GetDoctors([FromQuery] GetDoctorsQuery query)
+    {
+        
+        var doctors = await _mediator.Send(query);
+        return Ok(doctors);
     }
     // ── Weekly Schedule ────────────────────────────────────────────────────
     [HttpGet("schedule")]

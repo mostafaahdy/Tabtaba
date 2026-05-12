@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using Tabtaba.Domain.Contracts;
 using Tabtaba.Domain.Entities;
-using Tabtaba.Entities;
+using Tabtaba.Domain.Entities.UserEntity;
 using Tabtaba.ServicesAbstraction.Commands;
 
 namespace Tabtaba.Services.Features.EarningsServices;
@@ -24,7 +24,7 @@ public class WithdrawHandler : IRequestHandler<WithdrawCommand, bool>
         var availableBalance = appointments
             .Where(a => a.DoctorId == request.DoctorId
                      && a.IsPaid
-                     && a.Status == "Completed")
+                     && a.Status.ToString() == "Completed")
             .Sum(a => a.Price);
 
         

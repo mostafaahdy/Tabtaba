@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Tabtaba.Domain.Entities.Enums;
-using Tabtaba.Entities;
+using Tabtaba.Domain.Entities.UserEntity;
 using Tabtaba.ServicesAbstraction.Commands;
-using Tabtaba.Shared.DTOs.Auth;
+using Tabtaba.Shared.Auth;
 
 namespace Tabtaba.Services.Features.AuthenticationServices;
 

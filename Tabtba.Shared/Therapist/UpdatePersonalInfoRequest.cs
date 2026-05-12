@@ -1,0 +1,9 @@
+﻿using Tabtaba.Domain.Enums;
+
+namespace Tabtaba.Shared.Therapist;
+
+public class UpdatePersonalInfoRequest
+{
+    public Guid TherapistId { get; set; }
+    public PersonalInfoDto PersonalInfo { get; set; } = null!;
+}

@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using Tabtaba.Shared.DTOs.Auth;
+using Tabtaba.Shared.Auth;
 
 namespace Tabtaba.ServicesAbstraction.Commands;
 

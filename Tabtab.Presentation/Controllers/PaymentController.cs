@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Tabtaba.ServicesAbstraction.Commands;
 using Tabtaba.ServicesAbstraction.Queries;
-using Tabtaba.Shared.DTOs.Payment;
+using Tabtaba.Shared.Payment;
 
 namespace Tabtaba.Presentation.Controllers;
 
