@@ -1,16 +1,16 @@
-# 1. المرحلة الأساسية لتشغيل التطبيق
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
+# 1. المرحلة الأساسية لتشغيل التطبيق باستخدام .NET 9.0
+FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS base
 WORKDIR /app
 EXPOSE 8080
 
-# 2. مرحلة البناء والنشر (Build & Publish)
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+# 2. مرحلة البناء والنشر باستخدام SDK 9.0
+FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /src
 
 # نسخ كل الملفات دفعة واحدة
 COPY . .
 
-# عمل Restore وبناء للفولدر بالكامل بدون تحديد اسم ملف الـ csproj
+# عمل Restore وبناء للفولدر بالكامل
 RUN dotnet restore "Tbtba.API"
 RUN dotnet build "Tbtba.API" -c Release -o /app/build
 
