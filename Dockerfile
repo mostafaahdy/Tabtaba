@@ -7,16 +7,16 @@ EXPOSE 8080
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
-# نسخ كل الملفات دفعة واحدة عشان الـ Solution يقرا الفولدرات صح
+# نسخ كل الملفات دفعة واحدة
 COPY . .
 
-# عمل Restore وبناء باستخدام الحروف الصحيحة للمشروع
-RUN dotnet restore "Tbtba.API/Tbtba.API.csproj"
-RUN dotnet build "Tbtba.API/Tbtba.API.csproj" -c Release -o /app/build
+# عمل Restore وبناء للفولدر بالكامل بدون تحديد اسم ملف الـ csproj
+RUN dotnet restore "Tbtba.API"
+RUN dotnet build "Tbtba.API" -c Release -o /app/build
 
 # 3. مرحلة النشر (Publish)
 FROM build AS publish
-RUN dotnet publish "Tbtba.API/Tbtba.API.csproj" -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "Tbtba.API" -c Release -o /app/publish /p:UseAppHost=false
 
 # 4. المرحلة النهائية لتشغيل السيرفر
 FROM base AS final
