@@ -3,27 +3,20 @@ FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 WORKDIR /app
 EXPOSE 8080
 
-# 2. مرحلة البناء (Build)
+# 2. مرحلة البناء والنشر (Build & Publish)
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
-# نسخ ملفات الـ csproj لكل المشاريع بالأسماء الحقيقية
-COPY ["Tbtba.API/Tbtba.API.csproj", "Tbtba.API/"]
-COPY ["Tabtaba.Services/Tabtaba.Services.csproj", "Tabtaba.Services/"]
-COPY ["Tabtaba.ServicesAbstraction/Tabtaba.ServicesAbstraction.csproj", "Tabtaba.ServicesAbstraction/"]
-COPY ["Tabtba.Shared/Tabtba.Shared.csproj", "Tabtba.Shared/"]
-COPY ["Tbtba.Infrastructure/Tbtba.Infrastructure.csproj", "Tbtba.Infrastructure/"]
-
-RUN dotnet restore "Tbtba.API/Tbtba.API.csproj"
-
-# نسخ باقي الملفات وبناء المشروع
+# نسخ كل ملفات الـ Solution والمشاريع دفعة واحدة لتجنب أخطاء المسارات
 COPY . .
-WORKDIR "/src/Tbtba.API"
-RUN dotnet build "Tbtba.API.csproj" -c Release -o /app/build
+
+# عمل Restore وبناء من ملف الـ API الأساسي علطول
+RUN dotnet restore "Tbtba.API/Tbtba.API.csproj"
+RUN dotnet build "Tbtba.API/Tbtba.API.csproj" -c Release -o /app/build
 
 # 3. مرحلة النشر (Publish)
 FROM build AS publish
-RUN dotnet publish "Tbtba.API.csproj" -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "Tbtba.API/Tbtba.API.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 # 4. المرحلة النهائية لتشغيل السيرفر
 FROM base AS final
