@@ -7,10 +7,10 @@ EXPOSE 8080
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /src
 
-# نسخ كل ملفات المشروع بالكامل دفعة واحدة
+# نسخ كل ملفات المشروع بالكامل
 COPY . .
 
-# الانتقال المباشر لفولدر الـ API وبنائه هو وكل المشاريع اللي معتمد عليها تلقائياً
+# الانتقال لفولدر الـ API وبنائه
 WORKDIR "/src/Tbtba.API"
 RUN dotnet restore
 RUN dotnet build -c Release -o /app/build
@@ -19,8 +19,8 @@ RUN dotnet build -c Release -o /app/build
 FROM build AS publish
 RUN dotnet publish -c Release -o /app/publish /p:UseAppHost=false
 
-# 4. المرحلة النهائية لتشغيل السيرفر
+# 4. المرحلة النهائية لتشغيل السيرفر بالـ DLL الصح
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "Tbtba.API.dll"]
+ENTRYPOINT ["dotnet", "Tabtaba.Web.dll"]
