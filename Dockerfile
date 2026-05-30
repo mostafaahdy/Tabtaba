@@ -1,25 +1,18 @@
-# 1. المرحلة الأساسية لتشغيل التطبيق باستخدام .NET 9.0
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS base
 WORKDIR /app
 EXPOSE 8080
 
-# 2. مرحلة البناء والنشر باستخدام SDK 9.0
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /src
-
-# نسخ كل الملفات دفعة واحدة
 COPY . .
+RUN dotnet restore "Tabtaba.sln"
+RUN dotnet build "Tabtaba.sln" -c Release
 
-# عمل Restore وبناء للفولدر بالكامل
-RUN dotnet restore "Tbtba.API"
-RUN dotnet build "Tbtba.API" -c Release -o /app/build
-
-# 3. مرحلة النشر (Publish)
 FROM build AS publish
-RUN dotnet publish "Tbtba.API" -c Release -o /app/publish /p:UseAppHost=false
+WORKDIR "/src/Tbtba.API"
+RUN dotnet publish -c Release -o /app/publish /p:UseAppHost=false
 
-# 4. المرحلة النهائية لتشغيل السيرفر
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "Tbtba.API.dll"]
+ENTRYPOINT ["sh", "-c", "dotnet $(ls Tbtba.API.dll Tabtaba.Web.dll 2>/dev/null | head -n 1)"]
