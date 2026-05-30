@@ -7,10 +7,10 @@ EXPOSE 8080
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
-# نسخ كل ملفات الـ Solution والمشاريع دفعة واحدة لتجنب أخطاء المسارات
+# نسخ كل الملفات دفعة واحدة عشان الـ Solution يقرا الفولدرات صح
 COPY . .
 
-# عمل Restore وبناء من ملف الـ API الأساسي علطول
+# عمل Restore وبناء باستخدام الحروف الصحيحة للمشروع
 RUN dotnet restore "Tbtba.API/Tbtba.API.csproj"
 RUN dotnet build "Tbtba.API/Tbtba.API.csproj" -c Release -o /app/build
 
