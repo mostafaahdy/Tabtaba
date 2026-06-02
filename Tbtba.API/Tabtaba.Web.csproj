@@ -8,7 +8,13 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\Tabtaba.Persistence\Tabtaba.Persistence.csproj" />
+		<PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.11.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="9.0.1" />
+		<PackageReference Include="Serilog.AspNetCore" Version="9.0.0" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Tbtba.Infrastructure\Tabtaba.Persistence.csproj" />
 		<ProjectReference Include="..\Tabtaba.Services\Tabtaba.Services.csproj" />
 	</ItemGroup>
 
