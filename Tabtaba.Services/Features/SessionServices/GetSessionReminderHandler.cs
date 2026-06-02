@@ -50,7 +50,7 @@ namespace Tabtaba.Services.Features.SessionServices
             bool canJoin = (upcomingSession.Date_Time - now).TotalMinutes <= 5;
             return new SessionReminderResponse
             {
-                DoctorName = therapist?.FullName ?? "No name",
+                DoctorName = therapist?.User?.FullName ?? "No name",
                 Speciality = therapist?.Specialization ?? "Specialist in Mindfulness-Based Stress Reduction",
                 FullDate = upcomingSession.Date_Time.ToString("MMM dd"), // Oct 24
                 TimeLabel = $"{upcomingSession.Date_Time:h:mm tt} ({upcomingSession.Duration_Minutes}m)", // 2:30 PM (45m)

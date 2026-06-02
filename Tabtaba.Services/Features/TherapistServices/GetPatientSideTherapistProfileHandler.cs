@@ -35,7 +35,7 @@ namespace Tabtaba.Services.Features.TherapistServices
             return new PatientSideTherapistProfileResponse
             {
                 Id = therapist.Id,
-                FullName = $"Dr. {therapist.FullName}",
+                FullName = $"Dr. {therapist.User?.FullName}",
                 ProfilePictureUrl = therapist.ProfilePictureUrl,
                 Title = doctor?.Specialization ?? therapist.Specialization,   
 

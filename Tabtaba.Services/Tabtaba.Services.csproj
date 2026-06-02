@@ -5,6 +5,7 @@
 		<Nullable>enable</Nullable>
 	</PropertyGroup>
 	<ItemGroup>
+		<PackageReference Include="Azure.Core" Version="1.57.0" />
 		<PackageReference Include="MediatR" Version="14.1.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
 		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.18.0" />

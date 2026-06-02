@@ -1,44 +1,42 @@
-﻿using Tabtaba.Domain.Entities.UserEntity;
+﻿using System;
+using System.Collections.Generic;
+using Tabtaba.Domain.Entities.UserEntity;
 using Tabtaba.Domain.Enums;
 
-namespace Tabtaba.Domain.Entities.TherapistEntity;
-
-public class Therapist
+namespace Tabtaba.Domain.Entities.TherapistEntity
 {
-    public Guid Id { get; set; } = Guid.NewGuid();
-    public Guid UserId { get; set; }
-    public User User { get; set; } = null!;
+    public class Therapist
+    {
+        public Guid Id { get; set; } = Guid.NewGuid();
 
-    
-    public string? FullName { get; set; }
-    public Title? Title { get; set; }
-    public Gender? Gender { get; set; }
-    public string? Username { get; set; }
-    public string? Email { get; set; }
-    public string? MobileNumber { get; set; }
-    public DateTime? DateOfBirth { get; set; }
-    public string? Nationality { get; set; }
-    public string? CountryOfResidence { get; set; }
+        // ربط الـ Therapist بالـ User (تم تحويل نوع الـ FK لـ string عشان يتوافق مع الـ IdentityUser القياسي)
+        public string UserId { get; set; } = default!;
+        public virtual User User { get; set; } = null!;
 
- 
-    public string? CvUrl { get; set; }
+        // الحقول المهنية الخاصة بالمعالج فقط (تم تنظيف الحقول المتكررة اللي موجودة أوريدو في الـ User)
+        public Title? Title { get; set; }
+        public string? Username { get; set; }
+        public string? Nationality { get; set; }
+        public string? CountryOfResidence { get; set; }
+        public string? CvUrl { get; set; }
+        public string? Specialization { get; set; }
+        public string? Bio { get; set; }
+        public int? YearsOfExperience { get; set; }
+        public string? ProfilePictureUrl { get; set; }
+        public string IntroAudioUrl { get; set; } = default!;
+        public string AboutDescription { get; set; } = default!;
 
-    public TherapistProfessionalInfo? ProfessionalInfo { get; set; }
-    public string? Specialization { get; set; }
-    public string? Bio { get; set; }
-    public int? YearsOfExperience { get; set; }
-    public string? ProfilePictureUrl { get; set; }
-    public string IntroAudioUrl { get; set; } =default!;
-    public string AboutDescription { get; set; } = default!;
-  
+        public TherapistCategory Category { get; set; }
+        public TherapistStatus Status { get; set; } = TherapistStatus.Pending;
 
-    public TherapistCategory Category { get; set; }
-    public TherapistStatus Status { get; set; } = TherapistStatus.Pending;
-    public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        // تعديل نوع الوقت لـ DateTimeOffset لتوافق PostgreSQL
+        public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.UtcNow;
 
-    public ICollection<TherapistAvailability> Availabilities { get; set; } = new List<TherapistAvailability>();
-    public ICollection<TherapistDocument> Documents { get; set; } = new List<TherapistDocument>();
-    public ICollection<TherapistLanguage> Languages { get; set; } = new List<TherapistLanguage>();
-    
-    public ICollection<TherapistEducation> Educations { get; set; } = new List<TherapistEducation>();
+        // العلاقات التابعة
+        public virtual TherapistProfessionalInfo? ProfessionalInfo { get; set; }
+        public virtual ICollection<TherapistAvailability> Availabilities { get; set; } = new List<TherapistAvailability>();
+        public virtual ICollection<TherapistDocument> Documents { get; set; } = new List<TherapistDocument>();
+        public virtual ICollection<TherapistLanguage> Languages { get; set; } = new List<TherapistLanguage>();
+        public virtual ICollection<TherapistEducation> Educations { get; set; } = new List<TherapistEducation>();
+    }
 }

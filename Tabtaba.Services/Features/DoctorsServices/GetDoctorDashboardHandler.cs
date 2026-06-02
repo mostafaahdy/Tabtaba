@@ -52,7 +52,7 @@ public class GetDoctorDashboardHandler : IRequestHandler<GetDoctorDashboardQuery
             .Where(a => a.Date_Time.Date == today)
             .Select(a => new TodaySessionDto
             {
-                PatientName = a.Patient?.User?.FullName + " " + a.Patient?.User?.L_Name,
+                PatientName = a.Patient?.User?.FullName + " " + a.Patient?.User?.LastName,
                 SessionType = a.Session_Type,
                 SessionTime = a.Date_Time
             })
@@ -91,7 +91,7 @@ public class GetDoctorDashboardHandler : IRequestHandler<GetDoctorDashboardQuery
 
         return new DoctorDashboardResponse
         {
-            DoctorName = user.FullName + " " + user.L_Name,
+            DoctorName = user.FullName + " " + user.LastName,
             TotalEarnings = totalEarnings,
             EarningsPercentage = earningsPercentage,
             TotalSessions = totalSessions,

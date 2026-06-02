@@ -27,7 +27,7 @@ public class ForgotPasswordHandler : IRequestHandler<ForgotPasswordCommand, Forg
         // ── Find User ──────────────────────────────────────────────
         var user = await _userManager.FindByEmailAsync(request.Email);
 
-        if (user is null || user.Phone != request.MobileNumber)
+        if (user is null || user.PhoneNumber != request.MobileNumber)
             return new ForgotPasswordResponse
             {
                 Success = false,

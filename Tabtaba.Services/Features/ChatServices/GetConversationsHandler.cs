@@ -57,7 +57,7 @@ public class GetConversationsHandler : IRequestHandler<GetConversationsQuery, Li
             result.Add(new ConversationDto
             {
                 PatientId = conv.OtherUserId,
-                PatientName = otherUser.FullName + " " + otherUser.L_Name,
+                PatientName = otherUser.FullName + " " + otherUser.LastName,
                 LastMessage = conv.LastMessage.Content,
                 LastMessageTime = conv.LastMessage.SentAt,
                 UnreadCount = unreadCount,

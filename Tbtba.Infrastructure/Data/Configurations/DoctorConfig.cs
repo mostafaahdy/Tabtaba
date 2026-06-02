@@ -11,17 +11,16 @@ using Tabtaba.Domain.Entities.UserEntity;
 
 namespace Tabtaba.Persistence.Data.Configurations
 {
-    public class DoctorConfig : IEntityTypeConfiguration<Doctor>
+    public class DoctorConfig : IEntityTypeConfiguration<Therapist>
     {
-        public void Configure(EntityTypeBuilder<Doctor> builder)
+        public void Configure(EntityTypeBuilder<Therapist> builder)
         {
-            // Any other one-to-one relationships also restrict deletes
-           builder
-                .HasOne(d => d.User)
-                .WithOne(u => u.Doctor)
-                .HasForeignKey<User>(u => u.DoctorId)
+            builder.HasOne(d => d.User)
+                .WithOne(u => u.Therapist)
+                .HasForeignKey<Therapist>(d => d.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
-            builder.HasQueryFilter(d => d.IsActive);
+
+            // builder.HasQueryFilter(d => d.IsActive);
         }
     }
 }

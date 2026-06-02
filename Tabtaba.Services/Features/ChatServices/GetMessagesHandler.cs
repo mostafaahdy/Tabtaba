@@ -48,7 +48,7 @@ public class GetMessagesHandler : IRequestHandler<GetMessagesQuery, List<Message
                 Id = msg.Id,
                 Content = msg.Content,
                 SenderId = msg.SenderId,
-                SenderName = sender?.FullName + " " + sender?.L_Name,
+                SenderName = sender?.FullName + " " + sender?.LastName,
                 SentAt = msg.SentAt,
                 IsRead = msg.IsRead
             });

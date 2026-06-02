@@ -34,22 +34,23 @@ builder.Host.UseSerilog((ctx, config) =>
             rollingInterval: RollingInterval.Day,
             retainedFileCountLimit: 30);
 });
-//DeepSeek Ai Model Chatbot
+
+// DeepSeek Ai Model Chatbot
 builder.Services.Configure<DeepSeekSettings>(builder.Configuration.GetSection("DeepSeekSettings"));
 
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 builder.Services.AddSignalR();
 
+// 🔥 التعديل هنا: استخدام PostgreSQL (Npgsql) بدلاً من SQL Server
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
-
 builder.Services.AddScoped<IEmailService, EmailService>();
-builder.Services.AddHttpClient<IChatbotService,ChatbotService>();
+builder.Services.AddHttpClient<IChatbotService, ChatbotService>();
 
 builder.Services.AddIdentity<User, IdentityRole>(options =>
 {
@@ -115,7 +116,6 @@ builder.Services.AddMediatR(cfg =>
 builder.Services.AddValidatorsFromAssembly(
     typeof(EducationValidator).Assembly);
 
-
 //  CORS
 builder.Services.AddCors(options =>
 {
@@ -130,6 +130,7 @@ builder.Services.AddCors(options =>
               .AllowCredentials();
     });
 });
+
 //  Anti-CSRF
 builder.Services.AddAntiforgery(options =>
 {
@@ -138,7 +139,8 @@ builder.Services.AddAntiforgery(options =>
 builder.Services.AddSingleton<EncryptionService>();
 
 var app = builder.Build();
-app.UseMiddleware<GlobalExceptionMiddleware>();
+
+// 🛠️ تم إزالة السطر المكرر لـ GlobalExceptionMiddleware هنا
 app.UseMiddleware<GlobalExceptionMiddleware>();
 app.UseAntiforgery();
 
@@ -163,7 +165,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseCors("TabtabaPolicy");
 app.UseRateLimiter();
-app.UseMiddleware<RequestLoggingMiddleware>(); 
+app.UseMiddleware<RequestLoggingMiddleware>();
 app.UseMiddleware<SanitizationMiddleware>();
 app.UseAuthentication();
 app.UseAuthorization();

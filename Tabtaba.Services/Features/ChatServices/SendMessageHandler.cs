@@ -49,7 +49,7 @@ public class SendMessageHandler : IRequestHandler<SendMessageCommand, MessageDto
             Id = message.Id,
             Content = message.Content,
             SenderId = message.SenderId,
-            SenderName = sender?.FullName + " " + sender?.L_Name,
+            SenderName = sender?.FullName + " " + sender?.LastName,
             SentAt = message.SentAt,
             IsRead = message.IsRead
         };

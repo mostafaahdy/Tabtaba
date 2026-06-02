@@ -40,7 +40,7 @@ public class GetTherapistProfileHandler
         return new TherapistProfileResponse
         {
             Id = therapist.Id,
-            FullName = therapist.FullName ?? string.Empty,
+            FullName = therapist.User?.FullName ?? string.Empty,
             ProfilePictureUrl = therapist.ProfilePictureUrl,
             Specialization = therapist.Specialization,
             YearsOfExperience = therapist.YearsOfExperience,

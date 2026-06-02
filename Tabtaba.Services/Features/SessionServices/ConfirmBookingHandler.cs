@@ -13,19 +13,21 @@ using Tabtaba.Shared.Session;
 
 namespace Tabtaba.Services.Features.SessionServices
 {
-    public class ConfirmBookingHandler :IRequestHandler<ConfirmBookingCommand,BookingResponseDTO>
+    public class ConfirmBookingHandler : IRequestHandler<ConfirmBookingCommand, BookingResponseDTO>
     {
         private readonly IUnitOfWork _unitOfWork;
         public ConfirmBookingHandler(IUnitOfWork unitOfWork) => _unitOfWork = unitOfWork;
 
-        public async Task<BookingResponseDTO> Handle(ConfirmBookingCommand request,CancellationToken cancellationToken)
+        public async Task<BookingResponseDTO> Handle(ConfirmBookingCommand request, CancellationToken cancellationToken)
         {
             var appointmentRepo = _unitOfWork.GetRepository<Appointment>();
             var therapistRepo = _unitOfWork.GetRepository<Therapist>();
-             var therapist = (await therapistRepo.GetAllAsync())
-                .FirstOrDefault(t => t.UserId == request.TherapistId);
 
-            if( therapist == null ) throw new Exception("Therapist not found!");
+            // التعديل: البحث بـ Id المعالج مباشرة (Guid) المتوافق مع الـ Request
+            var therapist = (await therapistRepo.GetAllAsync())
+                .FirstOrDefault(t => t.Id == request.TherapistId);
+
+            if (therapist == null) throw new Exception("Therapist not found!");
 
             DateTime appointmentDay = request.SelectedDate.Date;
             TimeSpan appointmentTime = DateTime.Parse(request.SelectedTime).TimeOfDay;
@@ -33,30 +35,30 @@ namespace Tabtaba.Services.Features.SessionServices
 
             var newAppointment = new Appointment
             {
+                // التعديل: استخدام الخواص الجديدة المتوافقة مع كلاس الـ Therapist والـ PascalCase
                 DoctorId = request.DoctorIntId,
                 PatientId = request.PatientId,
                 Date_Time = finalDateTime,
                 Session_Type = request.SessionType, // "Video Call"
                 Duration_Minutes = request.Duration,
-                Price = request.Price,                 
-                Status = AppointmentStatus.Pending,      
+                Price = request.Price,
+                Status = AppointmentStatus.Pending,
                 Zoom_Meeting_Url = request.ZoomUrl,
                 Zoom_Meeting_Id = request.ZoomId
             };
 
             await appointmentRepo.AddAsync(newAppointment);
             await _unitOfWork.SaveChangesAsync();
+
             return new BookingResponseDTO
             {
                 Message = "Session Booked!",
-                DoctorName = therapist?.FullName ?? "Unknown Doctor",
+                // التعديل: سحب اسم الطبيب من كلاس الـ User المرتبط به
+                DoctorName = therapist?.User?.FullName ?? "Unknown Therapist",
                 FullDateTime = finalDateTime.ToString("MMM dd, yyyy - hh:mm tt"),
                 SessionType = request.SessionType,
                 Amount = request.Price
             };
-
         }
-
-
     }
 }

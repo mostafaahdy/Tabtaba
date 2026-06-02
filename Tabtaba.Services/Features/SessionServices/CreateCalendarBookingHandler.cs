@@ -29,8 +29,7 @@ namespace Tabtaba.Services.Features.SessionServices
             var patientRepo = _unitOfWork.GetRepository<Patient>(); 
 
             var therapist = await therapistRepo.GetByIdAsync(request.DoctorId);
-            string docName = therapist?.FullName ?? "Specialist";
-            string speciality = therapist?.Specialization ?? "Mental Health Consultant";
+            string docName = therapist?.User?.FullName ?? "Specialist"; string speciality = therapist?.Specialization ?? "Mental Health Consultant";
 
             DateTime finalDateTime = request.SelectedDate.Date.Add(DateTime.Parse(request.SelectedTime).TimeOfDay);
 

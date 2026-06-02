@@ -54,7 +54,7 @@ public class GetWeeklyScheduleHandler : IRequestHandler<GetWeeklyScheduleQuery, 
         var sessions = weekAppointments.Select(a => new SessionItemDto
         {
             AppointmentId = a.Id,
-            PatientName = a.Patient?.User?.FullName + " " + a.Patient?.User?.L_Name,
+            PatientName = a.Patient?.User?.FullName + " " + a.Patient?.User?.LastName,
             SessionTime = a.Date_Time,
             DurationMinutes = a.Duration_Minutes,
             SessionType = a.Session_Type,

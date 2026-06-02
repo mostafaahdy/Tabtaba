@@ -32,12 +32,12 @@ public class RegisterTherapistHandler : IRequestHandler<RegisterTherapistCommand
         var user = new User
         {
             FullName = request.FullName,
-            L_Name = request.L_Name,
+            LastName = request.L_Name,
             Email = request.Email,
             UserName = request.Email,
             PhoneNumber = request.Phone,
             Gender = request.Gender,
-            User_Type = nameof(UserRole.Therapist),
+            UserType = nameof(UserRole.Therapist),
             EmailConfirmed = false
         };
 

@@ -32,9 +32,8 @@ namespace Tabtaba.Services.Features.SessionServices
             var appointment = await appointmentRepo.GetByIdAsync(request.AppointmentId);
             if( appointment == null ) throw new Exception("Appointment not found");
             var therapist = await therapistRepo.GetByIdAsync(appointment.DoctorId);
-            string docName = therapist?.FullName ?? "Specialist";
+            string docName = therapist?.User?.FullName ?? "Specialist";
 
-            
             var newReview = new Review
             {
                 AppointmentId = request.AppointmentId,
