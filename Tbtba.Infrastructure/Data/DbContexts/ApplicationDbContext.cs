@@ -109,7 +109,7 @@ namespace Tabtba.Persistence.Data.DbContexts
             // الحفاظ على منطق زيادة الجلسات للمريض عند نجاح الدفع
             var successfulPayments = ChangeTracker.Entries<Payment>()
                  .Where(e => (e.State == EntityState.Added || e.State == EntityState.Modified)
-                              && e.Property(p => p.Status).CurrentValue?.ToString() == "Success")
+                               && e.Property(p => p.Status).CurrentValue?.ToString() == "Success")
                  .Select(e => e.Entity)
                  .ToList();
 
@@ -136,7 +136,8 @@ namespace Tabtba.Persistence.Data.DbContexts
                     UserId = "system",
                     EntityName = entry.Entity.GetType().Name,
                     Action = entry.State.ToString(),
-                    CreatedAt = DateTimeOffset.UtcNow.DateTime,
+                    // التعديل الحاسم هنا: استخدام .UtcDateTime لمنع إيرور الـ Unspecified Kindle في PostgreSQL
+                    CreatedAt = DateTimeOffset.UtcNow.UtcDateTime,
                     NewValues = entry.State != EntityState.Deleted ? JsonSerializer.Serialize(entry.CurrentValues.ToObject()) : null,
                     OldValues = entry.State != EntityState.Added ? JsonSerializer.Serialize(entry.OriginalValues.ToObject()) : null
                 };
