@@ -24,7 +24,7 @@ using Tabtba.Persistence.Data.DbContexts;
 
 var builder = WebApplication.CreateBuilder(args);
 
-//  Serilog
+// Serilog
 builder.Host.UseSerilog((ctx, config) =>
 {
     config
@@ -42,7 +42,7 @@ builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 builder.Services.AddSignalR();
 
-// 🔥 التعديل هنا: استخدام PostgreSQL (Npgsql) بدلاً من SQL Server
+// PostgreSQL (Npgsql)
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
@@ -67,7 +67,7 @@ builder.Services.AddIdentity<User, IdentityRole>(options =>
 .AddEntityFrameworkStores<ApplicationDbContext>()
 .AddDefaultTokenProviders();
 
-//  Rate Limiting
+// Rate Limiting
 builder.Services.AddRateLimiter(options =>
 {
     options.AddFixedWindowLimiter("LoginPolicy", opt =>
@@ -116,59 +116,55 @@ builder.Services.AddMediatR(cfg =>
 builder.Services.AddValidatorsFromAssembly(
     typeof(EducationValidator).Assembly);
 
-//  CORS
+// 🔥 تعديل الـ CORS: سمحنا لأي موقع خارجي (بما فيهم Vercel) يكلم الـ API عشان نخلص من خنقة الدومينات الخارحية
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("TabtabaPolicy", policy =>
     {
-        policy.WithOrigins(
-                "http://localhost:3000",
-                "http://localhost:4200",
-                "http://localhost:5173")
+        policy.SetIsOriginAllowed(origin => true) // دي بتخلي أي فرونت إند (Vercel أو غيره) يعدي حلاوة
               .AllowAnyHeader()
               .AllowAnyMethod()
               .AllowCredentials();
     });
 });
 
-//  Anti-CSRF
-builder.Services.AddAntiforgery(options =>
-{
-    options.HeaderName = "X-XSRF-TOKEN";
-});
 builder.Services.AddSingleton<EncryptionService>();
 
 var app = builder.Build();
 
-// 🛠️ تم إزالة السطر المكرر لـ GlobalExceptionMiddleware هنا
+// 1. الـ Global Exception أول حاجة في البايبلاين
 app.UseMiddleware<GlobalExceptionMiddleware>();
-app.UseAntiforgery();
+
+// 🔥 2. الـ CORS لازم يكون هنا فوق قبل أي حاجة عشان يوافق على الـ OPTIONS preflight فوراً
+app.UseCors("TabtabaPolicy");
+
+// تم إزالة app.UseAntiforgery() الملعون اللي كان بيخرب الـ Requests
 
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
 
-//  Security Headers
+// Security Headers متظبطة ومفتوحة للـ CORS المريح
 app.Use(async (context, next) =>
 {
     context.Response.Headers.Append("X-Content-Type-Options", "nosniff");
     context.Response.Headers.Append("X-Frame-Options", "DENY");
     context.Response.Headers.Append("X-XSS-Protection", "1; mode=block");
     context.Response.Headers.Append("Referrer-Policy", "no-referrer");
-    context.Response.Headers.Append("Content-Security-Policy", "default-src 'self'");
     context.Response.Headers.Append("Strict-Transport-Security", "max-age=31536000; includeSubDomains");
     await next();
 });
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-app.UseCors("TabtabaPolicy");
 app.UseRateLimiter();
 app.UseMiddleware<RequestLoggingMiddleware>();
 app.UseMiddleware<SanitizationMiddleware>();
+
 app.UseAuthentication();
 app.UseAuthorization();
+
 app.MapControllers();
 app.MapHub<ChatHub>("/hubs/chat");
 
