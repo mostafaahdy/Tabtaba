@@ -116,12 +116,12 @@ builder.Services.AddMediatR(cfg =>
 builder.Services.AddValidatorsFromAssembly(
     typeof(EducationValidator).Assembly);
 
-// 🔥 تعديل الـ CORS: سمحنا لأي موقع خارجي (بما فيهم Vercel) يكلم الـ API عشان نخلص من خنقة الدومينات الخارحية
+// CORS المتظبط لكل الدومينات الخارجية
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("TabtabaPolicy", policy =>
     {
-        policy.SetIsOriginAllowed(origin => true) // دي بتخلي أي فرونت إند (Vercel أو غيره) يعدي حلاوة
+        policy.SetIsOriginAllowed(origin => true)
               .AllowAnyHeader()
               .AllowAnyMethod()
               .AllowCredentials();
@@ -132,20 +132,18 @@ builder.Services.AddSingleton<EncryptionService>();
 
 var app = builder.Build();
 
-// 1. الـ Global Exception أول حاجة في البايبلاين
+// 1. الـ Global Exception أول حاجة
 app.UseMiddleware<GlobalExceptionMiddleware>();
 
-// 🔥 2. الـ CORS لازم يكون هنا فوق قبل أي حاجة عشان يوافق على الـ OPTIONS preflight فوراً
+// 2. الـ CORS هنا فوق عشان يوافق على الـ OPTIONS preflight فوراً
 app.UseCors("TabtabaPolicy");
-
-// تم إزالة app.UseAntiforgery() الملعون اللي كان بيخرب الـ Requests
 
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
 
-// Security Headers متظبطة ومفتوحة للـ CORS المريح
+// Security Headers
 app.Use(async (context, next) =>
 {
     context.Response.Headers.Append("X-Content-Type-Options", "nosniff");
