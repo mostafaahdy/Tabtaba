@@ -98,10 +98,14 @@ builder.Services.AddAuthentication(options =>
         ValidIssuer = jwtSettings["Issuer"],
         ValidAudience = jwtSettings["Audience"],
         IssuerSigningKey = new SymmetricSecurityKey(
-            Encoding.UTF8.GetBytes(jwtSettings["SecretKey"]!))
+            Encoding.UTF8.GetBytes(jwtSettings["SecretKey"]!)),
+
+        // 🚀 الحل القاتل: تصفير الـ ClockSkew يمنع الـ 401 الناتجة عن تفاوت الوقت بين السيرفرات الخارجيّة بالثانية
+        ClockSkew = TimeSpan.Zero
     };
-})
-.AddGoogle(options =>
+});
+
+builder.Services.AddAuthentication().AddGoogle(options =>
 {
     options.ClientId = builder.Configuration["Authentication:Google:ClientId"]!;
     options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"]!;
