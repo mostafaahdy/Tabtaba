@@ -116,7 +116,7 @@ builder.Services.AddMediatR(cfg =>
 builder.Services.AddValidatorsFromAssembly(
     typeof(EducationValidator).Assembly);
 
-// CORS المتظبط لكل الدومينات الخارجية
+// CORS - مسموح لكل الدومينات الخارجية عشان Vercel يعدي بأمان
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("TabtabaPolicy", policy =>
@@ -132,10 +132,10 @@ builder.Services.AddSingleton<EncryptionService>();
 
 var app = builder.Build();
 
-// 1. الـ Global Exception أول حاجة
+// 1. الـ Global Exception أول حاجة في الـ Pipeline
 app.UseMiddleware<GlobalExceptionMiddleware>();
 
-// 2. الـ CORS هنا فوق عشان يوافق على الـ OPTIONS preflight فوراً
+// 2. الـ CORS هنا فوق عشان يوافق على الـ OPTIONS preflight فوراً وقبل أي تفتيش
 app.UseCors("TabtabaPolicy");
 
 if (app.Environment.IsDevelopment())
