@@ -15,6 +15,6 @@ public record RegisterPatientCommand(
     string Phone,
     string Password,
     string Gender,
-    DateTime DateOfBirth,
+    string DateOfBirth,
     string MaritalStatus
 ) : IRequest<RegisterResponse>;

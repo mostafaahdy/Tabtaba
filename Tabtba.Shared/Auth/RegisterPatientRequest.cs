@@ -14,6 +14,5 @@ public class RegisterPatientRequest
     public string Phone { get; set; } = default!;
     public string Password { get; set; } = default!;
     public string Gender { get; set; } = default!;
-    public DateTime DateOfBirth { get; set; }
-    public string MaritalStatus { get; set; } = default!;
+    public string DateOfBirth { get; set; } = default!; public string MaritalStatus { get; set; } = default!;
 }
