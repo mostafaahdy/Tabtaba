@@ -245,12 +245,13 @@ public class AuthController : ControllerBase
         }
     }
     [HttpPost("logout")]
-    [Authorize] 
+    [Authorize]
     public async Task<IActionResult> Logout()
     {
         var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-        if( string.IsNullOrEmpty(userId) ) return BadRequest();
-        var command = new LogoutCommand(int.Parse(userId));
+        if (string.IsNullOrEmpty(userId)) return BadRequest();
+
+        var command = new LogoutCommand(userId);
         var result = await _mediator.Send(command);
 
         return result ? Ok(new { message = "Logged out successfully" }) : BadRequest();
