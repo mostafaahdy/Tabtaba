@@ -5,20 +5,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Tabtaba.Domain.Entities; // 🚀 عشان يلقط كلاس الـ Therapist لو مكانه هنا
+using Tabtaba.Domain.Entities;
 using Tabtaba.Domain.Entities.Enums;
 using Tabtaba.Domain.Entities.TherapistEntity;
 using Tabtaba.Domain.Entities.UserEntity;
 using Tabtaba.ServicesAbstraction.Commands;
 using Tabtaba.Shared.Auth;
-using Tabtba.Persistence.Data.DbContexts; // 🚀 عشان يققرأ الـ DbContext بتاعك من الـ using اللي فوق عندك
+using Tabtba.Persistence.Data.DbContexts;
 
 namespace Tabtaba.Services.Features.AuthenticationServices;
 
 public class RegisterTherapistHandler : IRequestHandler<RegisterTherapistCommand, RegisterResponse>
 {
     private readonly UserManager<User> _userManager;
-    private readonly ApplicationDbContext _context; // 🔒 البديل المضمون والسريع للـ UnitOfWork
+    private readonly ApplicationDbContext _context;
 
     public RegisterTherapistHandler(
         UserManager<User> userManager,
@@ -57,20 +57,20 @@ public class RegisterTherapistHandler : IRequestHandler<RegisterTherapistCommand
         // ── 3. إضافة الـ Role
         await _userManager.AddToRoleAsync(user, nameof(UserRole.Therapist));
 
-        // ── 4. 🔥 الـحـل الـسـحـري: التخزين المباشر في الـ DbContext لتفادي مشاكل مسميات الـ Repository
+        // ── 4. 🔥 الـحـل الـسـحـري: التخزين المباشر في الـ DbContext مع حل مشكلة الـ Validation
         var therapist = new Therapist
         {
             Id = Guid.NewGuid(), // الـ ID السحري لـ Step 5
             UserId = user.Id,
             Specialization = request.Specialization,
             YearsOfExperience = request.YearsOfExperience,
-            
+           
         };
 
         await _context.Set<Therapist>().AddAsync(therapist, cancellationToken);
         await _context.SaveChangesAsync(cancellationToken); // التسميع الفوري في سوبابيز
 
-        // ── 5. إرجاع الـ Response بالـ TherapistGuid (التوكنات سيب الفرونت يسحبها أوتوماتيك من الـ Login بعد الـ Wizard)
+        // ── 5. إرجاع الـ Response بالـ TherapistGuid
         return new RegisterResponse
         {
             Email = user.Email,

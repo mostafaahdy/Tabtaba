@@ -20,6 +20,7 @@ public class RegisterTherapistValidator : AbstractValidator<RegisterTherapistCom
         RuleFor(x => x.Gender).NotEmpty().WithMessage("Gender is required.");
         RuleFor(x => x.Specialization).NotEmpty().WithMessage("Specialization is required.");
         RuleFor(x => x.YearsOfExperience).GreaterThan(0).WithMessage("Years of experience must be greater than 0.");
-        RuleFor(x => x.LicenseNumber).NotEmpty().WithMessage("License number is required.");
+
+        
     }
 }
