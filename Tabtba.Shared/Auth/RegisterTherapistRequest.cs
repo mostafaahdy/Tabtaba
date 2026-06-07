@@ -7,6 +7,7 @@ using System.Xml.Linq;
 
 namespace Tabtaba.Shared.Auth;
 
+
 public class RegisterTherapistRequest
 {
     public string FullName { get; set; } = default!;

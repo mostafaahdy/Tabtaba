@@ -214,7 +214,8 @@ public class AuthController : ControllerBase
                 request.Gender,
                 request.Specialization,
                 request.YearsOfExperience,
-                request.LicenseNumber);
+                request.LicenseNumber
+            );
 
             var result = await _mediator.Send(command);
             return Ok(result);
