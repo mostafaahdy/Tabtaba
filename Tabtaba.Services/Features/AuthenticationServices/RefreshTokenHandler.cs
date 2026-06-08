@@ -1,19 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MediatR;
+﻿using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text;
+using System.Threading.Tasks;
+using Tabtaba.Domain.Entities.UserEntity;
 using Tabtaba.ServicesAbstraction.Commands;
 using Tabtaba.Shared.Auth;
-using Tabtaba.Domain.Entities.UserEntity;
+using Tabtba.Persistence.Data.DbContexts;
 
 namespace Tabtaba.Services.Features.AuthenticationServices;
 
@@ -21,13 +22,13 @@ public class RefreshTokenHandler : IRequestHandler<RefreshTokenCommand, LoginRes
 {
     private readonly UserManager<User> _userManager;
     private readonly IConfiguration _configuration;
+    private readonly ApplicationDbContext _context; // 👈 السطر ده مضاف
 
-    public RefreshTokenHandler(
-        UserManager<User> userManager,
-        IConfiguration configuration)
+    public RefreshTokenHandler(UserManager<User> userManager, IConfiguration configuration, ApplicationDbContext context)
     {
         _userManager = userManager;
         _configuration = configuration;
+        _context = context; // 👈 السطر ده مضاف
     }
 
     public async Task<LoginResponse> Handle(
